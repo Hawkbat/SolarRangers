@@ -1,0 +1,61 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "name": "RangerEntryOuter",
+  "starSystem": "Jam3",
+  "canShowOnTitle": false,
+  "Orbit": {
+    "isStatic": true,
+    "staticPosition": {
+      "x": 0,
+      "y": -10000,
+      "z": 0
+    }
+  },
+  "Bramble": {
+    "dimension": {
+      "allowedEntrances": [ 0 ],
+      "vinePrefab": "none",
+      "linksTo": "EggStarInner",
+      "fogDensity": 1.0,
+      "fogTint": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 255
+      },
+      "radius": 750
+    },
+    "nodes": [
+      {
+        "name": "RangerEntryInner",
+        "linksTo": "RangerTunnel1Outer",
+        "scale": 1,
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "possibleExits": [ 3 ]
+      }
+    ]
+  },
+  "Props": {
+    "details": [
+      {
+        "path": "OrbitalProbeCannon_Body/Sector_OrbitalProbeCannon/Interactables_OrbitalProbeCannon/Interactables_VisibleOrbitalProbeCannon/Prefab_NOM_Airlock (1)",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 90
+        },
+        "scale": 200,
+        "keepLoaded": true
+      }
+    ]
+  }
+}

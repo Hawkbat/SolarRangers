@@ -1,0 +1,124 @@
+﻿using HarmonyLib;
+using SolarRangers.Controllers;
+using SolarRangers.Managers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace SolarRangers
+{
+    public static class Patches
+    {
+        [HarmonyPostfix, HarmonyPatch(typeof(ShipCockpitController), nameof(ShipCockpitController.IsMatchVelocityAvailable))]
+        public static void ShipCockpitController_IsMatchVelocityAvailable(ref bool __result)
+        {
+            if (!SolarRangers.CombatModeActive) return;
+            if (SolarRangers.ShipCombatant && SolarRangers.ShipCombatant.IsInAttackMode)
+            {
+                __result = false;
+            }
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(ProbeLauncher), nameof(ProbeLauncher.TakeSnapshotWithCamera))]
+        public static bool ProbeLauncher_TakeSnapshotWithCamera(ProbeCamera camera)
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            var probe = camera.GetComponentInParent<SurveyorProbe>();
+            var sector = probe._sectorDetector.GetLastEnteredSector();
+
+            if (PlayerState.AtFlightConsole())
+            {
+                ExplosionManager.MediumExplosion(SolarRangers.ShipCombatant, 100f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+            }
+            else
+            {
+                ExplosionManager.SmallExplosion(SolarRangers.PlayerCombatant, 25f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+            }
+
+            probe.Retrieve(0f);
+
+            SolarRangers.PlayerCombatant.StartProbeReload(5f);
+
+            return false;
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(ProbeLauncher), nameof(ProbeLauncher.LaunchProbe))]
+        public static bool ProbeLauncher_LaunchProbe()
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            if (SolarRangers.PlayerCombatant && SolarRangers.PlayerCombatant.IsReloadingProbe())
+                return false;
+            return true;
+        }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(MeteorController), nameof(MeteorController.Initialize))]
+        public static void MeteorController_Initialize(MeteorController __instance)
+        {
+            var projectile = __instance.GetComponent<MeteorProjectileController>();
+            if (!projectile)
+            {
+                projectile = __instance.gameObject.AddComponent<MeteorProjectileController>();
+                projectile.Init(SolarRangers.WorldCombatant, UnityEngine.Random.Range(__instance._minDamage, __instance._maxDamage));
+            }
+        }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(MeteorController), nameof(MeteorController.Impact))]
+        public static void MeteorController_Impact(MeteorController __instance)
+        {
+            var projectile = __instance.GetComponent<MeteorProjectileController>();
+            if (projectile) projectile.OnImpact();
+        }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(MeteorController), nameof(MeteorController.Suspend), [])]
+        public static void MeteorController_Suspend(MeteorController __instance)
+        {
+            var projectile = __instance.GetComponent<MeteorProjectileController>();
+            if (projectile) projectile.OnSuspend();
+        }
+
+
+        [HarmonyPrefix, HarmonyPatch(typeof(AnglerfishController), nameof(AnglerfishController.OnCaughtObject))]
+        public static bool AnglerfishController_OnCaughtObject(AnglerfishController __instance)
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            var combatant = __instance.gameObject.GetComponent<AnglerCombatantController>();
+            if (!combatant) return true;
+            if (combatant.CanEatPlayer()) return true;
+            return false;
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(ExplosionController), nameof(ExplosionController.Update))]
+        public static bool ExplosionController_Update(ExplosionController __instance)
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            var newTimerValue = Mathf.Clamp01((__instance._timer + Time.deltaTime) / __instance._length);
+            if (newTimerValue == 1f)
+            {
+                __instance._playing = false;
+                ExplosionManager.Recycle(__instance);
+                return false;
+            }
+            return true;
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(FogLight), nameof(FogLight.UpdateFogLight))]
+        public static void FogLight_UpdateFogLight(FogLight __instance)
+        {
+            if (!SolarRangers.CombatModeActive) return;
+            while (__instance._linkedLightData.Count < __instance._linkedFogLights.Count)
+            {
+                var nextFogLight = __instance._linkedFogLights[__instance._linkedLightData.Count - 1];
+                var lightData = new FogLight.LightData()
+                {
+                    color = nextFogLight.GetTint(),
+                    maxAlpha = __instance._maxAlpha,
+                };
+                __instance._linkedLightData.Add(lightData);
+                Locator.GetFogLightManager().RegisterLightData(lightData);
+            }
+        }
+    }
+}

@@ -1,0 +1,197 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
+  "name": "Egg Star",
+  "starSystem": "Jam3",
+  "Base": {
+    "groundSize": 0,
+    "surfaceSize": 2000,
+    "surfaceGravity": 6,
+    "hasMapMarker": true
+  },
+  "Orbit": {
+    "primaryBody": "Jam 3 Sun",
+    "isTidallyLocked": true
+  },
+  "Bramble": {
+    "nodes": [
+      {
+        "name": "EggStarInner",
+        "linksTo": "RangerEntryOuter",
+        "possibleExits": [1],
+        "scale": 10
+      }
+    ]
+  },
+  "AmbientLights": [
+    {
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 2000
+      },
+      "innerRadius": 100,
+      "outerRadius": 1000
+    }
+  ],
+  "Props": {
+    "details": [
+      {
+        "path": "OrbitalProbeCannon_Body/Sector_OrbitalProbeCannon/Interactables_OrbitalProbeCannon/Interactables_VisibleOrbitalProbeCannon/Prefab_NOM_Airlock (1)",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 350
+        },
+        "scale": 200,
+        "keepLoaded": true
+      },
+      {
+        "path": "MiningRig_Body/Structure_TH_HEA_MiningRig",
+        "position": {
+          "x": 0,
+          "y": 2000,
+          "z": 0
+        },
+        "scale": 10,
+        "keepLoaded": true
+      },
+      {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Sector_LowerVillage/Characters_LowerVillage/Villager_HEA_Mica",
+        "removeChildren": [ "ConversationZone" ],
+        "position": {
+          "x": -2,
+          "y": 2058,
+          "z": -53
+        },
+        "rotation": {
+          "x": 270,
+          "y": 90,
+          "z": 90
+        }
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)",
+        "position": {
+          "x": 0,
+          "y": 2100,
+          "z": -53
+        },
+        "rotation": {
+          "x": 270,
+          "y": 90,
+          "z": 90
+        }
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 0,
+          "y": 2085,
+          "z": -53
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "alignRadial": true
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 0,
+          "y": 2075,
+          "z": -53
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "alignRadial": true
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 0,
+          "y": 2065,
+          "z": -53
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "alignRadial": true
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 0,
+          "y": 2055,
+          "z": -53
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "alignRadial": true
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)/Props_NOM_LargeTractorBeam_Geo",
+        "position": {
+          "x": 0,
+          "y": 2100,
+          "z": 53
+        },
+        "rotation": {
+          "x": 270,
+          "y": 90,
+          "z": 270
+        }
+      },
+      {
+        "path": "GabbroShip_Body/Sector_GabbroShip/Geometry_GabbroShip",
+        "position": {
+          "x": 0,
+          "y": 2100,
+          "z": 49
+        },
+        "rotation": {
+          "x": 90,
+          "y": 90,
+          "z": 270
+        }
+      }
+    ],
+    "dialogue": [
+      {
+        "position": {
+          "x": -2,
+          "y": 2058,
+          "z": -52
+        },
+        "pathToAnimController": "Sector/Villager_HEA_Mica",
+        "xmlFile": "planets/dialogue/GENERAL.xml"
+      }
+    ]
+  },
+  "Volumes": {
+    "zeroGravityVolumes": [
+      {
+        "position": {
+          "x": 0,
+          "y": 2000,
+          "z": 0
+        },
+        "radius": 200
+      }
+    ]
+  }
+}
