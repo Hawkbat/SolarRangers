@@ -23,7 +23,6 @@ namespace SolarRangers
         public static PlayerCombatantController PlayerCombatant;
         public static PlayerDestructibleController PlayerDestructible;
         public static ShipCombatantController ShipCombatant;
-        public static ReactorCombatantController ReactorCombatant;
         public static TransientCombatant WorldCombatant;
 
         public static bool CombatModeActive = false;
@@ -51,6 +50,7 @@ namespace SolarRangers
 
                 ModHelper.Events.Unity.FireOnNextUpdate(() =>
                 {
+                    ReferenceFrameManager.Spawn();
                     CombatantManager.Spawn();
                     CombatMusicManager.Spawn();
                     ExplosionManager.Spawn();
@@ -63,9 +63,6 @@ namespace SolarRangers
                     PlayerCombatant = PlayerCombatantController.Merge(Locator.GetPlayerTransform());
                     PlayerDestructible = PlayerDestructibleController.Merge(Locator.GetPlayerTransform());
                     ShipCombatant = ShipCombatantController.Merge(Locator.GetShipTransform());
-
-                    ReactorCombatant = ReactorCombatantController.Spawn();
-                    ObjectUtils.PlaceOnPlanet(ReactorCombatant.transform, AstroObject.Name.TimberHearth, new Vector3(0f, 0f, 800f), new Vector3());
 
                     foreach (var hull in Locator.GetShipTransform().GetComponentsInChildren<ShipHull>())
                         ShipHullDestructibleController.Merge(hull);

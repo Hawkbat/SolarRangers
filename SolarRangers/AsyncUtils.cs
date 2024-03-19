@@ -18,6 +18,7 @@ namespace SolarRangers
                 yield return null;
             }
             callback?.Invoke(1f);
+            yield return null;
         }
 
         public static IEnumerator DoObjectLerp(Transform transform, Vector3 targetPos, Quaternion targetRot, float duration, Action<float> callback = null)

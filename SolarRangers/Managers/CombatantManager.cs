@@ -23,12 +23,14 @@ namespace SolarRangers.Managers
 
         public static void Track(ICombatant combatant)
         {
+            if (!Instance) return;
             Instance.combatants.Add(combatant);
             Instance.GetOrAddSignal(combatant);
         }
 
         public static void Untrack(ICombatant combatant)
         {
+            if (!Instance) return;
             Instance.combatants.Remove(combatant);
             Instance.RemoveSignal(combatant);
         }

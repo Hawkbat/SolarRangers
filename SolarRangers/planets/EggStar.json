@@ -17,20 +17,48 @@
       {
         "name": "EggStarInner",
         "linksTo": "RangerEntryOuter",
-        "possibleExits": [1],
+        "possibleExits": [ 1 ],
         "scale": 10
       }
     ]
+  },
+  "Atmosphere": {
+    "size": 1500,
+    "minShockSpeed": 1000,
+    "maxShockSpeed": 1000
   },
   "AmbientLights": [
     {
       "position": {
         "x": 0,
         "y": 0,
-        "z": 2000
+        "z": 0
       },
-      "innerRadius": 100,
-      "outerRadius": 1000
+      "intensity": 0.5,
+      "tint": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 255
+      },
+      "innerRadius": 1000,
+      "outerRadius": 2000
+    },
+    {
+      "position": {
+        "x": 0,
+        "y": 2000,
+        "z": 0
+      },
+      "intensity": 1,
+      "tint": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 255
+      },
+      "innerRadius": 500,
+      "outerRadius": 2000
     }
   ],
   "Props": {
@@ -168,6 +196,29 @@
           "y": 90,
           "z": 270
         }
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)/Props_NOM_LargeTractorBeam_Geo",
+        "position": {
+          "x": 45.9,
+          "y": 2100,
+          "z": 26.5
+        },
+        "rotation": {
+          "x": 270,
+          "y": 90,
+          "z": 255
+        }
+      },
+      {
+        "rename": "PREFAB_Beacon",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Beacon.prefab",
+        "assetBundle": "assetbundles/solarrangers"
+      },
+      {
+        "rename": "PREFAB_Drone",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Drone.prefab",
+        "assetBundle": "assetbundles/solarrangers"
       }
     ],
     "dialogue": [

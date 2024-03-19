@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/body_schema.json",
-  "name": "RangerTunnel1Outer",
+  "name": "RangerReactorOuter",
   "starSystem": "Jam3",
   "canShowOnTitle": false,
   "Orbit": {
@@ -15,7 +15,7 @@
     "dimension": {
       "allowedEntrances": [ 0 ],
       "vinePrefab": "none",
-      "linksTo": "RangerEntryInner",
+      "linksTo": "RangerTunnel1Inner",
       "fogDensity": 1.0,
       "fogTint": {
         "r": 0,
@@ -24,20 +24,7 @@
         "a": 255
       },
       "radius": 750
-    },
-    "nodes": [
-      {
-        "name": "RangerTunnel1Inner",
-        "linksTo": "RangerReactorOuter",
-        "scale": 1,
-        "position": {
-          "x": 0,
-          "y": 0,
-          "z": 0
-        },
-        "possibleExits": [ 3 ]
-      }
-    ]
+    }
   },
   "Props": {
     "details": [

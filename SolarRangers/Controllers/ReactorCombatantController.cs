@@ -124,9 +124,11 @@ namespace SolarRangers.Controllers
             reactorCore.transform.SetParent(transform, false);
             reactorCore.Init(this);
 
+            /*
             var airlockPath = "OrbitalProbeCannon_Body/Sector_OrbitalProbeCannon/Interactables_OrbitalProbeCannon/Interactables_VisibleOrbitalProbeCannon/Prefab_NOM_Airlock (1)";
             var airlock = ObjectUtils.Spawn(transform, airlockPath);
             airlock.transform.localScale = Vector3.one * 80f;
+            */
 
             var timeLoopDevicePath = "TowerTwin_Body/Sector_TowerTwin/Sector_TimeLoopInterior/Geometry_TimeLoopInterior/ControlledByProxy_TimeLoopInterior/Structure_NOM_TimeLoopDevice_Int";
             var timeLoopDevice = ObjectUtils.Spawn(transform, timeLoopDevicePath);

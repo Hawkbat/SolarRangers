@@ -120,5 +120,12 @@ namespace SolarRangers
                 Locator.GetFogLightManager().RegisterLightData(lightData);
             }
         }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(ReferenceFrame), nameof(ReferenceFrame.GetHUDDisplayName))]
+        public static void ReferenceFrame_GetHUDDisplayName(ReferenceFrame __instance, ref string __result)
+        {
+            var customName = ReferenceFrameManager.GetCustomName(__instance);
+            if (customName != null) __result = customName;
+        }
     }
 }

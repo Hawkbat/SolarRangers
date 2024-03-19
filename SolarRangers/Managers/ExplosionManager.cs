@@ -48,9 +48,10 @@ namespace SolarRangers.Managers
                 explosion = Instantiate(Instance.shipExplosionPrefab).GetComponent<ExplosionController>();
             }
 
-            explosion.transform.SetParent(parent, false);
-            explosion.transform.position = position;
+            explosion.transform.SetParent(null);
             explosion.transform.localScale = Vector3.one * 20f * size;
+            explosion.transform.parent = parent;
+            explosion.transform.position = position;
             explosion.enabled = true;
             SolarRangers.Instance.ModHelper.Events.Unity.FireOnNextUpdate(() =>
             {
@@ -105,6 +106,7 @@ namespace SolarRangers.Managers
         public static void Recycle(ExplosionController explosion)
         {
             explosion.enabled = false;
+            explosion.transform.SetParent(null);
             Instance.explosionPool.Enqueue(explosion);
         }
     }

@@ -15,6 +15,8 @@ namespace SolarRangers.Controllers
 
         float health;
 
+        static GameObject prefab;
+
         public override string GetNameKey() => "CombatantEggDrone";
 
         public float GetHealth() => health;
@@ -23,7 +25,14 @@ namespace SolarRangers.Controllers
 
         public static EggDroneCombatantController Spawn()
         {
-            var drone = new GameObject("EggDrone").AddComponent<EggDroneCombatantController>();
+            if (!prefab)
+            {
+                prefab = SolarRangers.NewHorizons.GetPlanet("Egg Star").transform.Find("Sector/PREFAB_Drone").gameObject;
+                prefab.SetActive(false);
+            }
+
+            var drone = Instantiate(prefab).GetComponent<EggDroneCombatantController>();
+            drone.gameObject.SetActive(true);
             drone.Init();
             return drone;
         }

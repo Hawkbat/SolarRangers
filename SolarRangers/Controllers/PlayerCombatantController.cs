@@ -80,7 +80,7 @@ namespace SolarRangers.Controllers
                 var target = Locator.GetPlayerCamera().transform.position + Locator.GetPlayerCamera().transform.forward * 50f;
                 var dir = (target - source).normalized;
 
-                scopeTurret.transform.position = source + dir;
+                scopeTurret.transform.position = source + dir * 2f;
                 scopeTurret.transform.forward = dir;
             }
 
