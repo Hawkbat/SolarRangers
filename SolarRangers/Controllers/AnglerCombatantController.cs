@@ -21,7 +21,8 @@ namespace SolarRangers.Controllers
         static Vector3 INITIAL_MOUTH_OFFSET = new(0f, 2f, 60f);
 
         const float HEALTH_FACTOR = 500f;
-        const float STUN_FACTOR = 1f / 25f;
+        const float STUN_CHANCE_FACTOR = 1f / 200f;
+        const float STUN_DURATION_FACTOR = 1f / 25f;
         const float DEATH_EXPLOSION_LARGE_THRESHOLD = 0.75f;
         const float DEATH_EXPLOSION_MEDIUM_THRESHOLD = 0.25f;
         const float EAT_PLAYER_SCALE_THRESHOLD = 0.5f;
@@ -75,6 +76,8 @@ namespace SolarRangers.Controllers
                 angler._mouthOffset = INITIAL_MOUTH_OFFSET * scale;
             }
 
+            ReferenceFrameManager.Register(angler._anglerBody._referenceFrame, GetNameKey());
+
             if (isMecha)
             {
                 // spawn cyborg attachments
@@ -90,14 +93,17 @@ namespace SolarRangers.Controllers
                 anglerAudio._oneShotSource.PlayOneShot(AudioType.DBAnglerfishDetectDisturbance);
                 angler.ChangeState(AnglerfishController.AnglerState.Stunned);
             }
-
         }
 
         public bool TakeDamage(IDamageSource source, float damage)
         {
             if (IsDestroyed()) return false;
             health = Mathf.Max(health - damage, 0f);
-            Stun(damage * STUN_FACTOR);
+            var stunChance = damage * STUN_CHANCE_FACTOR;
+            if (UnityEngine.Random.value < stunChance)
+            {
+                Stun(damage * STUN_DURATION_FACTOR);
+            }
             if (health <= 0f)
             {
                 StartCoroutine(OnDie());
@@ -127,6 +133,7 @@ namespace SolarRangers.Controllers
             anglerAudio._oneShotSource.PlayOneShot(AudioType.DBAnglerfishOpeningMouth);
             yield return new WaitForSeconds(0.5f);
             anglerAnim.enabled = false;
+            anglerAnim._animator.enabled = false;
             angler._anglerBody.AddAngularVelocityChange(UnityEngine.Random.onUnitSphere * 0.25f);
         }
 

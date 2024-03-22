@@ -20,15 +20,17 @@ namespace SolarRangers
             obj.transform.SetParent(parent, false);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localEulerAngles = Vector3.zero;
+
+            ReplaceModMaterials(obj);
+
             return obj.GetComponent<T>();
         }
 
         public static GameObject Spawn(Transform parent, string path)
             => Spawn<Transform>(parent, path).gameObject;
 
-        public static T PlaceOnPlanet<T>(T c, string planetName, Vector3 position, Vector3 rotation) where T : Component
+        public static T PlaceOnPlanet<T>(T c, GameObject planet, Vector3 position, Vector3 rotation) where T : Component
         {
-            var planet = SolarRangers.NewHorizons.GetPlanet(planetName);
             var sector = planet.GetComponent<AstroObject>().GetRootSector();
             var pos = planet.transform.TransformPoint(position);
             var rot = planet.transform.rotation * Quaternion.Euler(rotation.x, rotation.y, rotation.z);
@@ -38,23 +40,21 @@ namespace SolarRangers
             t.transform.position = pos;
             t.transform.rotation = rot;
 
+            var owrb = c.gameObject.GetComponent<OWRigidbody>();
+            if (owrb)
+            {
+                var parentBody = planet.GetAttachedOWRigidbody();
+                owrb.SetVelocity(parentBody.GetPointVelocity(owrb.GetWorldCenterOfMass()));
+                owrb.SetAngularVelocity(parentBody.GetAngularVelocity());
+            }
             return c;
         }
+
+        public static T PlaceOnPlanet<T>(T c, string planetName, Vector3 position, Vector3 rotation) where T : Component
+            => PlaceOnPlanet(c, SolarRangers.NewHorizons.GetPlanet(planetName), position, rotation);
 
         public static T PlaceOnPlanet<T>(T c, AstroObject.Name planetName, Vector3 position, Vector3 rotation) where T : Component
-        {
-            var planet = Locator.GetAstroObject(planetName);
-            var sector = planet.GetRootSector();
-            var pos = planet.transform.TransformPoint(position);
-            var rot = planet.transform.rotation * Quaternion.Euler(rotation.x, rotation.y, rotation.z);
-
-            var t = c.transform;
-            t.SetParent(sector.transform, false);
-            t.transform.position = pos;
-            t.transform.rotation = rot;
-
-            return c;
-        }
+            => PlaceOnPlanet(c, Locator.GetAstroObject(planetName).gameObject, position, rotation);
 
         public static OWRigidbody ConvertToPhysicsProp(GameObject obj, OWRigidbody parentBody)
         {
@@ -122,24 +122,52 @@ namespace SolarRangers
             go.SetActive(true);
         }
 
+        public static void ReplaceModMaterials(GameObject root)
+        {
+            var materialMapping = new Dictionary<string, string> {
+                { "Effects_NOM_VolumetricLight", "Effects_EGG_VolumetricLight" },
+                { "Structure_NOM_Porcelain_mat", "Structure_EGG_Porcelain_mat" },
+                { "Structure_NOM_BlueGlow_mat", "Structure_EGG_RedGlow_mat" },
+                { "Structure_NOM_Silver_mat", "Structure_EGG_RedMetal_mat" },
+                { "Structure_NOM_Airlock_mat", "Structure_EGG_Porcelain_mat" },
+            };
+            ReplaceMaterials(root, materialMapping);
+        }
+
         public static void ReplaceMaterials(GameObject root, Dictionary<string, string> materialMapping)
         {
             var bundle = AssetBundle.GetAllLoadedAssetBundles().First(b => b.name == "solarrangers");
             Dictionary<string, Material> bundleMats = [];
-            var renderers = root.GetComponentsInChildren<Renderer>();
+            var renderers = root.GetComponentsInChildren<Renderer>(true);
             foreach (var renderer in renderers)
             {
-                for (var i = 0; i < renderer.sharedMaterials.Length; i++)
+                var hasReplaced = false;
+                var sharedMats = renderer.sharedMaterials;
+                for (var i = 0; i < sharedMats.Length; i++)
                 {
-                    var material = renderer.sharedMaterials[i];
+                    var material = sharedMats[i];
+                    if (!material) continue;
                     if (materialMapping.TryGetValue(material.name, out var newMatName) || materialMapping.TryGetValue(material.name.Replace(" (Instance)", ""), out newMatName))
                     {
+                        SolarRangers.Log($"Replacing {material.name} with {newMatName}");
                         if (!bundleMats.TryGetValue(newMatName, out var newMat))
                         {
-                            newMat = bundle.LoadAsset<Material>($"Assets/SolarRangers/Materials/{newMatName}.mat");
+                            var path = $"Assets/SolarRangers/Materials/{newMatName}.mat";
+                            if (!bundle.Contains(path))
+                            {
+                                throw new KeyNotFoundException($"Could not retrieve material from bundle: {path}");
+                            }
+                            newMat = bundle.LoadAsset<Material>(path);
+
+                            bundleMats[newMatName] = newMat;
                         }
-                        renderer.sharedMaterials[i] = newMat;
+                        sharedMats[i] = newMat;
+                        hasReplaced = true;
                     }
+                }
+                if (hasReplaced)
+                {
+                    renderer.sharedMaterials = sharedMats;
                 }
             }
         }

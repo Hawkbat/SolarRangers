@@ -13,6 +13,7 @@ namespace SolarRangers.Controllers
         OWCamera shipCam;
         Coroutine shipTransformAnimationCoroutine;
         bool wingsOpen;
+        bool wingsEverOpened;
 
         ShipWingController wingLL;
         ShipWingController wingUL;
@@ -20,6 +21,8 @@ namespace SolarRangers.Controllers
         ShipWingController wingUR;
 
         ScreenPrompt fireLasersPrompt;
+
+        LandingPadManager landingPadManager;
 
         public override string GetNameKey() => "CombatantShip";
         public override bool CanTarget() => false;
@@ -53,6 +56,8 @@ namespace SolarRangers.Controllers
             wingLR = new GameObject().AddComponent<ShipWingController>().Init(this, false, true);
             wingUR = new GameObject().AddComponent<ShipWingController>().Init(this, false, false);
 
+            landingPadManager = transform.GetComponentInChildren<LandingPadManager>();
+
             GlobalMessenger.AddListener("StartShipIgnition", StartShipIgnition);
             GlobalMessenger.AddListener("CancelShipIgnition", CancelShipIgnition);
             GlobalMessenger.AddListener("CompleteShipIgnition", CompleteShipIgnition);
@@ -70,6 +75,12 @@ namespace SolarRangers.Controllers
             fireLasersPrompt.SetVisibility(OWInput.IsInputMode(InputMode.ShipCockpit) && IsInAttackMode);
             var firing = IsInAttackMode && OWInput.IsPressed(InputLibrary.matchVelocity);
             SetFiringState(firing);
+
+            if (!wingsEverOpened && SolarRangers.CombatModeActive && !wingsOpen && !landingPadManager.IsLanded() && OWInput.IsInputMode(InputMode.ShipCockpit))
+            {
+                wingsEverOpened = true;
+                StartShipIgnition();
+            }
         }
 
         void StartShipIgnition()
@@ -87,6 +98,7 @@ namespace SolarRangers.Controllers
         void CompleteShipIgnition()
         {
             wingsOpen = true;
+            wingsEverOpened = true;
         }
 
         IEnumerator DoShipTransformAnimation(bool opening)
@@ -146,6 +158,9 @@ namespace SolarRangers.Controllers
             shipCam.transform.localRotation = initialRotation;
 
             SolarRangers.CommonCameraUtility.ExitCamera(shipCam);
+
+            wingsOpen = true;
+            wingsEverOpened = true;
         }
 
         void CancelShipTransformAnimation()

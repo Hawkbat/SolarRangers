@@ -11,9 +11,15 @@ namespace SolarRangers.Controllers
 {
     public class EggDroneCombatantController : AbstractCombatantController, IDestructible
     {
-        const float MAX_HEALTH = 25f;
+        const float DETECTION_DISTANCE = 1500f;
+        const float MAX_HEALTH = 100f;
 
         float health;
+        bool chasing;
+        bool initialized;
+        LaserTurretController turret;
+        OWRigidbody rb;
+        OWRigidbody planetBody;
 
         static GameObject prefab;
 
@@ -23,23 +29,45 @@ namespace SolarRangers.Controllers
         public float GetMaxHealth() => MAX_HEALTH;
         public bool IsDestroyed() => health <= 0f;
 
-        public static EggDroneCombatantController Spawn()
+        public static EggDroneCombatantController Spawn(GameObject planet)
         {
             if (!prefab)
             {
-                prefab = SolarRangers.NewHorizons.GetPlanet("Egg Star").transform.Find("Sector/PREFAB_Drone").gameObject;
+                prefab = GameObject.Find("PREFAB_Drone").gameObject;
                 prefab.SetActive(false);
             }
 
             var drone = Instantiate(prefab).GetComponent<EggDroneCombatantController>();
             drone.gameObject.SetActive(true);
-            drone.Init();
+            drone.Init(planet);
             return drone;
         }
 
-        public void Init()
+        public void Init(GameObject planet)
         {
             health = MAX_HEALTH;
+            transform.parent = null;
+
+            ReferenceFrameManager.Register(rb._referenceFrame, GetNameKey());
+
+            planetBody = planet.GetAttachedOWRigidbody();
+
+            turret = new GameObject("Turret").AddComponent<LaserTurretController>();
+            turret.transform.SetParent(transform);
+            turret.transform.localPosition = new Vector3(0f, 20f, 0f);
+            turret.transform.localEulerAngles = new Vector3(-90f, 0f, 0f);
+
+            var fireRate = 2f;
+            var fireDelay = 0f;
+            var damage = 10f;
+            var spread = 0.05f;
+            var laserSpeed = 200f;
+            var laserRange = 1000f;
+            var laserSize = new Vector3(0.5f, 4f, 0.5f);
+            var laserColor = Color.green;
+            turret.Init(this, fireRate, fireDelay, damage, spread, laserSpeed, laserRange, laserSize, laserColor);
+
+            initialized = true;
         }
 
         public bool TakeDamage(IDamageSource source, float damage)
@@ -48,9 +76,55 @@ namespace SolarRangers.Controllers
             health = Mathf.Clamp(health - damage, 0f, GetMaxHealth());
             if (health <= 0f)
             {
-                ExplosionManager.LargeExplosion(this, 25f, transform, Vector3.zero);
+                ExplosionManager.LargeExplosion(this, 25f, transform, rb.GetWorldCenterOfMass());
+                foreach (Transform child in transform)
+                {
+                    ObjectUtils.ConvertToPhysicsProp(child.gameObject, rb);
+                }
             }
             return true;
+        }
+
+        void Awake()
+        {
+            rb = GetComponent<OWRigidbody>();
+        }
+
+        void Update()
+        {
+            if (!initialized) return;
+            var isDead = IsDestroyed();
+            var inRange = Vector3.Distance(transform.position, Locator.GetPlayerTransform().position) < DETECTION_DISTANCE;
+            if (inRange && !chasing)
+            {
+                chasing = true;
+            }
+            turret.SetFiringState(!isDead && inRange);
+        }
+
+        void FixedUpdate()
+        {
+            if (!initialized) return;
+
+            var relativeVelocity = planetBody.GetRelativeVelocity(rb);
+
+            if (chasing && !IsDestroyed())
+            {
+                var moveAccel = 75f;
+                var turnSpeed = 30f;
+                var targetPos = Locator.GetPlayerBody().GetPosition();
+                var diff = targetPos - rb.GetPosition();
+                var cross = Vector3.Cross(transform.up, diff.normalized).normalized;
+                rb.SetAngularVelocity(cross * turnSpeed * Mathf.Deg2Rad);
+                rb.AddLocalAcceleration(Vector3.up * moveAccel);
+            }
+
+            var dragFactor = 0.5f;
+            var acceleration = -0.5f * relativeVelocity * dragFactor;
+            rb.AddAcceleration(acceleration);
+            var angularVelocity = rb.GetAngularVelocity();
+            var angularAcceleration = -0.5f * angularVelocity * dragFactor;
+            rb.AddAngularAcceleration(angularAcceleration);
         }
     }
 }

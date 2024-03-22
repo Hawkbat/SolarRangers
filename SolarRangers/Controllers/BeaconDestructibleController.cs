@@ -54,7 +54,7 @@ namespace SolarRangers.Controllers
             if (health <= 0f)
             {
                 beaconObj.SetActive(false);
-                ExplosionManager.LargeExplosion(SolarRangers.WorldCombatant, 50f, transform, transform.position);
+                ExplosionManager.MediumExplosion(SolarRangers.WorldCombatant, 50f, transform, transform.position);
             }
             return true;
         }

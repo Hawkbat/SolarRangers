@@ -56,7 +56,7 @@ namespace SolarRangers.Controllers
         void Update()
         {
             coreMaterial.color = GetCoreColor();
-            coreSphere.transform.localScale = Vector3.one * 40f * Mathf.Lerp(0.9f, 1.1f, Mathf.Abs(Mathf.Sin(Time.time)));
+            coreSphere.transform.localScale = Vector3.one * 80f * Mathf.Lerp(0.9f, 1.1f, Mathf.Abs(Mathf.Sin(Time.time)));
         }
 
         Color GetCoreColor()

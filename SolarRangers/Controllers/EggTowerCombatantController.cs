@@ -20,7 +20,7 @@ namespace SolarRangers.Controllers
         float health = MAX_HEALTH;
         bool hasDied = false;
 
-        LaserTurretController turret;
+        MeteorTurretController turret;
         GameObject eggObj;
         GameObject towerObj;
         GameObject towerCollisionObj;
@@ -71,6 +71,7 @@ namespace SolarRangers.Controllers
             turretObj.SetActive(false);
             eggObj.GetComponentInChildren<Animator>().speed = 0f;
             var owBody = ObjectUtils.ConvertToPhysicsProp(eggObj, parentBody);
+            ReferenceFrameManager.Register(owBody._referenceFrame, GetNameKey());
             var launchDir = ((eggObj.transform.position - source.GetDamagePosition()).normalized + transform.up).normalized;
             owBody.AddVelocityChange(launchDir * 10f);
         }
@@ -112,18 +113,23 @@ namespace SolarRangers.Controllers
             var turretDisplayPath = "CaveTwin_Body/Sector_CaveTwin/Sector_SouthHemisphere/Sector_GravityCannon/Geometry_GravityCannon/ControlledByProxy_Arch/Structure_NOM_GravityCannon_HT";
             var turretDisplayObj = ObjectUtils.Spawn(turretObj.transform, turretDisplayPath);
             turretDisplayObj.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
-            turretDisplayObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            turretDisplayObj.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            turret = turretObj.AddComponent<LaserTurretController>();
-            var fireRate = 4f;
+            turret = turretObj.AddComponent<MeteorTurretController>();
+            var fireRate = 10f;
             var fireDelay = 1f;
             var damage = 15f;
+            /*
             var spread = 0.05f;
             var laserSpeed = 200f;
             var laserRange = 1000f;
             var laserSize = new Vector3(0.5f, 4f, 0.5f);
             var laserColor = Color.green;
             turret.Init(this, fireRate, fireDelay, damage, spread, laserSpeed, laserRange, laserSize, laserColor);
+            */
+            var meteorSize = 0.5f;
+            var meteorSpeed = 250f;
+            turret.Init(this, fireRate, fireDelay, damage, meteorSize, meteorSpeed);
         }
 
         void Update()

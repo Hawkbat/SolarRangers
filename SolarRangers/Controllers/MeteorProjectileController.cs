@@ -12,7 +12,11 @@ namespace SolarRangers.Controllers
 {
     public class MeteorProjectileController : AbstractDamageSourceController, IDestructible
     {
+        const float MAX_LIFETIME = 15f;
+
         float size;
+        float lifeTime;
+        bool isCustom;
         MeteorController meteor;
 
         public string GetNameKey() => "DestructibleMeteor";
@@ -24,6 +28,8 @@ namespace SolarRangers.Controllers
         {
             Init(attacker, damage);
             this.size = size;
+
+            isCustom = true;
 
             transform.localScale = Vector3.one * size;
 
@@ -64,7 +70,7 @@ namespace SolarRangers.Controllers
             meteor._heat += damage / 100f;
             if (meteor._heat > 1f)
             {
-                meteor.Impact(meteor.gameObject, transform.position, Vector3.zero);
+                meteor.Impact(gameObject, transform.position, Vector3.zero);
             }
             return true;
         }
@@ -72,6 +78,20 @@ namespace SolarRangers.Controllers
         void Awake()
         {
             meteor = GetComponent<MeteorController>();
+        }
+
+        void Update()
+        {
+            if (!isCustom || !meteor.hasLaunched || meteor.hasImpacted) return;
+            lifeTime += Time.deltaTime;
+            if (lifeTime > MAX_LIFETIME - 5f)
+            {
+                meteor._heat += Time.deltaTime / 5f;
+                if (meteor._heat > 1f)
+                {
+                    meteor.Impact(gameObject, transform.position, Vector3.zero);
+                }
+            }
         }
     }
 }

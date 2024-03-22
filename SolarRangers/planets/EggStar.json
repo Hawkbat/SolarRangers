@@ -4,7 +4,7 @@
   "starSystem": "Jam3",
   "Base": {
     "groundSize": 0,
-    "surfaceSize": 2000,
+    "surfaceSize": 828,
     "surfaceGravity": 6,
     "hasMapMarker": true
   },
@@ -23,7 +23,7 @@
     ]
   },
   "Atmosphere": {
-    "size": 1500,
+    "size": 1000,
     "minShockSpeed": 1000,
     "maxShockSpeed": 1000
   },
@@ -119,6 +119,20 @@
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
         "position": {
           "x": 0,
+          "y": 2100,
+          "z": -53
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "alignRadial": true
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 0,
           "y": 2085,
           "z": -53
         },
@@ -206,19 +220,66 @@
         },
         "rotation": {
           "x": 270,
-          "y": 90,
-          "z": 255
+          "y": 60,
+          "z": 0
+        }
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)/Props_NOM_LargeTractorBeam_Geo",
+        "position": {
+          "x": -45.9,
+          "y": 2100,
+          "z": 26.5
+        },
+        "rotation": {
+          "x": 270,
+          "y": -60,
+          "z": 0
+        }
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)/Props_NOM_LargeTractorBeam_Geo",
+        "position": {
+          "x": -45.9,
+          "y": 2100,
+          "z": -26.5
+        },
+        "rotation": {
+          "x": 270,
+          "y": 240,
+          "z": 0
+        }
+      },
+      {
+        "path": "StatueIsland_Body/Sector_StatueIsland/Interactables_StatueIsland/ControlledByProxy_StatueIsland/Props_NOM_DockingTractorBeam (1)/Props_NOM_LargeTractorBeam_Geo",
+        "position": {
+          "x": 45.9,
+          "y": 2100,
+          "z": -26.5
+        },
+        "rotation": {
+          "x": 270,
+          "y": -240,
+          "z": 0
         }
       },
       {
         "rename": "PREFAB_Beacon",
         "path": "Assets/SolarRangers/Objects/EggEmpire/Beacon.prefab",
-        "assetBundle": "assetbundles/solarrangers"
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
       },
       {
         "rename": "PREFAB_Drone",
         "path": "Assets/SolarRangers/Objects/EggEmpire/Drone.prefab",
-        "assetBundle": "assetbundles/solarrangers"
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
+      },
+      {
+        "rename": "PREFAB_GroundForcefield",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/GroundForcefield.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
       }
     ],
     "dialogue": [

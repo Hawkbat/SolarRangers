@@ -53,8 +53,12 @@ namespace SolarRangers.Controllers
             var planetRuleset = Locator.GetShipDetector().GetComponent<RulesetDetector>().GetPlanetoidRuleset();
             if (planetRuleset != null)
             {
-                var distToCenter = Vector3.Distance(shipT.position, planetRuleset.transform.root.position);
-                convergeAt = Mathf.Max(100f, Mathf.Abs(planetRuleset.GetAltitude(distToCenter)));
+                var shipP = shipT.position;
+                var planetP = planetRuleset.transform.root.position;
+                var dot = Mathf.Max(0f, Vector3.Dot(shipT.forward, (planetP - shipP).normalized));
+                var dist = Vector3.Distance(shipP, planetP);
+                var altitude = Mathf.Max(100f, Mathf.Abs(planetRuleset.GetAltitude(dist)));
+                convergeAt = Mathf.Lerp(500f, altitude, dot);
             }
             var target = shipT.position + shipT.forward * convergeAt;
             turretController.transform.forward = (target - turretController.transform.position).normalized;

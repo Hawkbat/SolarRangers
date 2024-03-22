@@ -74,6 +74,7 @@ namespace SolarRangers.Managers
                 soundObj.SetActive(false);
                 var audioSource = soundObj.GetAddComponent<AudioSource>();
                 var owAudioSource = soundObj.GetAddComponent<OWAudioSource>();
+                owAudioSource._audioSource = audioSource;
                 owAudioSource.SetTrack(OWAudioMixer.TrackName.Environment_Unfiltered);
                 soundObj.SetActive(true);
                 owAudioSource.maxDistance = 500f;

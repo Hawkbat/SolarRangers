@@ -31,11 +31,11 @@ namespace SolarRangers
 
             if (PlayerState.AtFlightConsole())
             {
-                ExplosionManager.MediumExplosion(SolarRangers.ShipCombatant, 100f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+                ExplosionManager.MediumExplosion(SolarRangers.ShipCombatant, 200f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
             }
             else
             {
-                ExplosionManager.SmallExplosion(SolarRangers.PlayerCombatant, 25f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+                ExplosionManager.SmallExplosion(SolarRangers.PlayerCombatant, 50f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
             }
 
             probe.Retrieve(0f);
@@ -126,6 +126,12 @@ namespace SolarRangers
         {
             var customName = ReferenceFrameManager.GetCustomName(__instance);
             if (customName != null) __result = customName;
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(ConstantFluidDetector), nameof(ConstantFluidDetector.AccumulateFluidAcceleration))]
+        public static bool ConstantFluidDetector_AccumulateFluidAcceleration(ConstantFluidDetector __instance)
+        {
+            return !!__instance._onlyDetectableFluid;
         }
     }
 }

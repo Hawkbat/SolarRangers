@@ -51,7 +51,7 @@ namespace SolarRangers.Controllers
         {
             if (!coreExposed || coreClosing) StartCoroutine(DoOpenCore());
 
-            var countdownTimer = 30f;
+            var countdownTimer = 90f;
 
             var shipNotificationDisplay = Locator.GetShipTransform().GetComponentInChildren<ShipNotificationDisplay>();
 
@@ -134,13 +134,13 @@ namespace SolarRangers.Controllers
             var timeLoopDevice = ObjectUtils.Spawn(transform, timeLoopDevicePath);
             timeLoopDevice.transform.localPosition = Vector3.zero;
             timeLoopDevice.transform.localEulerAngles = new Vector3(0f, 0f, 270f);
-            timeLoopDevice.transform.localScale = Vector3.one * 10f;
+            timeLoopDevice.transform.localScale = Vector3.one * 20f;
 
             var coreCasingPath = "TowerTwin_Body/Sector_TowerTwin/Sector_TimeLoopInterior/Interactables_TimeLoopInterior/CoreCasingController";
             var coreCasing = ObjectUtils.Spawn(transform, coreCasingPath);
             coreCasing.transform.localPosition = Vector3.zero;
             coreCasing.transform.localEulerAngles = Vector3.zero;
-            coreCasing.transform.localScale = Vector3.one * 10f;
+            coreCasing.transform.localScale = Vector3.one * 20f;
 
             var timeLoopCoreController = coreCasing.GetComponent<TimeLoopCoreController>();
             coreCasingAudio = timeLoopCoreController._coreCasingAudio;
