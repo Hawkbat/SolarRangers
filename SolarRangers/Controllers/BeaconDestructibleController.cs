@@ -16,8 +16,6 @@ namespace SolarRangers.Controllers
         float health = MAX_HEALTH;
         GameObject beaconObj;
 
-        static GameObject beaconPrefab;
-
         public override float GetHealth() => health;
         public override float GetMaxHealth() => MAX_HEALTH;
 
@@ -34,17 +32,7 @@ namespace SolarRangers.Controllers
         {
             health = MAX_HEALTH;
 
-            if (!beaconPrefab)
-            {
-                beaconPrefab = SolarRangers.NewHorizons.GetPlanet("Egg Star").transform.Find("Sector/PREFAB_Beacon").gameObject;
-                beaconPrefab.SetActive(false);
-            }
-
-            beaconObj = Instantiate(beaconPrefab, transform);
-            beaconObj.transform.localPosition = Vector3.zero;
-            beaconObj.transform.localEulerAngles = Vector3.zero;
-            beaconObj.transform.localScale = Vector3.one;
-            beaconObj.SetActive(true);
+            beaconObj = ObjectUtils.SpawnPrefab("Beacon", transform).gameObject;
         }
 
         public override bool TakeDamage(IDamageSource source, float damage)

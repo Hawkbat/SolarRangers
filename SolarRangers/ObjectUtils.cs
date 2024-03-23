@@ -11,6 +11,8 @@ namespace SolarRangers
 {
     public static class ObjectUtils
     {
+        static Dictionary<string, GameObject> prefabCache = [];
+
         public static T Spawn<T>(Transform parent, string path) where T : Component
         {
             var planet = parent ? parent.root.gameObject : null;
@@ -55,6 +57,35 @@ namespace SolarRangers
 
         public static T PlaceOnPlanet<T>(T c, AstroObject.Name planetName, Vector3 position, Vector3 rotation) where T : Component
             => PlaceOnPlanet(c, Locator.GetAstroObject(planetName).gameObject, position, rotation);
+
+        public static Transform SpawnPrefab(string prefabName, Transform parent, string childPath = null)
+        {
+            if (!prefabCache.TryGetValue(prefabName, out var prefab) || !prefab)
+            {
+                var planet = SolarRangers.NewHorizons.GetPlanet("Egg Star");
+                var prefabTransform = planet.transform.Find($"Sector/PREFAB_{prefabName}");
+                if (prefabTransform)
+                {
+                    prefab = prefabTransform.gameObject;
+                }
+                else
+                {
+                    prefab = GameObject.Find($"PREFAB_{prefabName}");
+                }
+                prefab.SetActive(false);
+                prefabCache[prefabName] = prefab;
+            }
+            if (!string.IsNullOrEmpty(childPath))
+            {
+                parent = parent.Find(childPath);
+            }
+            var obj = GameObject.Instantiate(prefab, parent);
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localEulerAngles = Vector3.zero;
+            obj.transform.localScale = Vector3.one;
+            obj.SetActive(true);
+            return obj.transform;
+        }
 
         public static OWRigidbody ConvertToPhysicsProp(GameObject obj, OWRigidbody parentBody)
         {
@@ -130,6 +161,7 @@ namespace SolarRangers
                 { "Structure_NOM_BlueGlow_mat", "Structure_EGG_RedGlow_mat" },
                 { "Structure_NOM_Silver_mat", "Structure_EGG_RedMetal_mat" },
                 { "Structure_NOM_Airlock_mat", "Structure_EGG_Porcelain_mat" },
+                { "Traveller_HEA_Chert_mat", "Evil_EGG" },
             };
             ReplaceMaterials(root, materialMapping);
         }

@@ -12,7 +12,7 @@ namespace SolarRangers.Controllers
     public class EggDroneCombatantController : AbstractCombatantController, IDestructible
     {
         const float DETECTION_DISTANCE = 1500f;
-        const float MAX_HEALTH = 100f;
+        const float MAX_HEALTH = 50f;
 
         float health;
         bool chasing;
@@ -20,8 +20,6 @@ namespace SolarRangers.Controllers
         LaserTurretController turret;
         OWRigidbody rb;
         OWRigidbody planetBody;
-
-        static GameObject prefab;
 
         public override string GetNameKey() => "CombatantEggDrone";
 
@@ -31,13 +29,7 @@ namespace SolarRangers.Controllers
 
         public static EggDroneCombatantController Spawn(GameObject planet)
         {
-            if (!prefab)
-            {
-                prefab = GameObject.Find("PREFAB_Drone").gameObject;
-                prefab.SetActive(false);
-            }
-
-            var drone = Instantiate(prefab).GetComponent<EggDroneCombatantController>();
+            var drone = ObjectUtils.SpawnPrefab("Drone", null, null).GetComponent<EggDroneCombatantController>();
             drone.gameObject.SetActive(true);
             drone.Init(planet);
             return drone;

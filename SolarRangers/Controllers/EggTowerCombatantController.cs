@@ -13,7 +13,7 @@ namespace SolarRangers.Controllers
 {
     public class EggTowerCombatantController : AbstractCombatantController, IDestructible
     {
-        const float DETECTION_DISTANCE = 1000f;
+        const float DETECTION_DISTANCE = 1500f;
         const float TURRET_ROTATE_SPEED = 30f;
         const float MAX_HEALTH = 100f;
 
@@ -108,14 +108,19 @@ namespace SolarRangers.Controllers
 
             turretObj = new GameObject("Turret");
             turretObj.transform.SetParent(transform, false);
-            turretObj.transform.localPosition = new Vector3(0f, towerOffset + 0.5f, 2f);
+            turretObj.transform.localPosition = new Vector3(0f, towerOffset + 0.5f, 0f);
 
             var turretDisplayPath = "CaveTwin_Body/Sector_CaveTwin/Sector_SouthHemisphere/Sector_GravityCannon/Geometry_GravityCannon/ControlledByProxy_Arch/Structure_NOM_GravityCannon_HT";
             var turretDisplayObj = ObjectUtils.Spawn(turretObj.transform, turretDisplayPath);
+            turretDisplayObj.transform.localPosition = Vector3.zero;
             turretDisplayObj.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
             turretDisplayObj.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            turret = turretObj.AddComponent<MeteorTurretController>();
+            turret = new GameObject("Turret").AddComponent<MeteorTurretController>();
+            turret.transform.SetParent(turretObj.transform, false);
+            turret.transform.localPosition = new Vector3(0f, 0f, 200f);
+            turret.transform.localEulerAngles = Vector3.zero;
+
             var fireRate = 10f;
             var fireDelay = 1f;
             var damage = 15f;
@@ -141,12 +146,15 @@ namespace SolarRangers.Controllers
             }
 
             var playerT = Locator.GetPlayerTransform();
-            var turretT = turret.transform;
+            var turretT = turretObj.transform;
             var inRange = Vector3.Distance(playerT.position, turretT.position) <= DETECTION_DISTANCE;
             
             if (inRange)
             {
-                var lookPlane = new Plane(transform.up, transform.position);
+                var lookRot = Quaternion.LookRotation(playerT.position - turretT.position, transform.up);
+                turretT.rotation = Quaternion.RotateTowards(turretT.rotation, lookRot, Time.deltaTime * TURRET_ROTATE_SPEED);
+
+                /*var lookPlane = new Plane(transform.up, transform.position);
                 var lookPoint = lookPlane.ClosestPointOnPlane(playerT.position);
                 var lookRot = Quaternion.LookRotation(lookPoint - transform.position, transform.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRot, Time.deltaTime * TURRET_ROTATE_SPEED);
@@ -154,7 +162,7 @@ namespace SolarRangers.Controllers
                 var turretPlane = new Plane(transform.right, turretT.position);
                 var turretPoint = turretPlane.ClosestPointOnPlane(playerT.position);
                 var turretRot = Quaternion.LookRotation(turretPoint - turretT.position, transform.up);
-                turretT.rotation = Quaternion.RotateTowards(turretT.rotation, turretRot, Time.deltaTime * TURRET_ROTATE_SPEED);
+                turretT.rotation = Quaternion.RotateTowards(turretT.rotation, turretRot, Time.deltaTime * TURRET_ROTATE_SPEED);*/
             }
 
             turret.SetFiringState(inRange);

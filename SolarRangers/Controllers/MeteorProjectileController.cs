@@ -29,6 +29,7 @@ namespace SolarRangers.Controllers
             Init(attacker, damage);
             this.size = size;
 
+            lifeTime = 0f;
             isCustom = true;
 
             transform.localScale = Vector3.one * size;

@@ -15,7 +15,7 @@
     "dimension": {
       "allowedEntrances": [ 0 ],
       "vinePrefab": "none",
-      "linksTo": "RangerTunnel1Inner",
+      "linksTo": "RangerEntryInner",
       "fogDensity": 1.0,
       "fogTint": {
         "r": 0,

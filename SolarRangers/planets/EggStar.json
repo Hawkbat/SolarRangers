@@ -79,6 +79,22 @@
         "keepLoaded": true
       },
       {
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Airlock_Cap_Empty.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 20,
+          "y": 355,
+          "z": 170
+        },
+        "scale": 205,
+        "keepLoaded": true
+      },
+      {
         "path": "MiningRig_Body/Structure_TH_HEA_MiningRig",
         "position": {
           "x": 0,
@@ -94,12 +110,38 @@
         "position": {
           "x": -2,
           "y": 2058,
-          "z": -53
+          "z": -53.05
         },
         "rotation": {
           "x": 270,
           "y": 90,
           "z": 90
+        }
+      },
+      {
+        "path": "QuantumMoon_Body/Sector_QuantumMoon/State_EYE/Interactables_EYEState/ConversationPivot/Character_NOM_Solanum/Nomai_ANIM_SkyWatching_Idle",
+        "position": {
+          "x": 3,
+          "y": 2066,
+          "z": -53.05
+        },
+        "rotation": {
+          "x": 345,
+          "y": 270,
+          "z": 270
+        }
+      },
+      {
+        "path": "DreamWorld_Body/Sector_DreamWorld/Sector_DreamZone_2/Ghosts_DreamZone_2/GhostNodeMap_HornetHouse/Prefab_IP_GhostBird_Hornet/Ghostbird_IP_ANIM",
+        "position": {
+          "x": 2,
+          "y": 2059,
+          "z": -53.05
+        },
+        "rotation": {
+          "x": 345,
+          "y": 270,
+          "z": 270
         }
       },
       {
@@ -133,7 +175,7 @@
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
         "position": {
           "x": 0,
-          "y": 2085,
+          "y": 2090,
           "z": -53
         },
         "rotation": {
@@ -147,7 +189,7 @@
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
         "position": {
           "x": 0,
-          "y": 2075,
+          "y": 2080,
           "z": -53
         },
         "rotation": {
@@ -161,7 +203,7 @@
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
         "position": {
           "x": 0,
-          "y": 2065,
+          "y": 2070,
           "z": -53
         },
         "rotation": {
@@ -175,7 +217,7 @@
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
         "position": {
           "x": 0,
-          "y": 2055,
+          "y": 2060,
           "z": -53
         },
         "rotation": {
@@ -280,6 +322,24 @@
         "path": "Assets/SolarRangers/Objects/EggEmpire/GroundForcefield.prefab",
         "assetBundle": "assetbundles/solarrangers",
         "keepLoaded": true
+      },
+      {
+        "rename": "PREFAB_Angler_Implant_body02",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_body02.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
+      },
+      {
+        "rename": "PREFAB_Angler_Implant_engine",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_engine.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
+      },
+      {
+        "rename": "PREFAB_Angler_Implant_jaw",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_jaw.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
       }
     ],
     "dialogue": [
@@ -291,6 +351,39 @@
         },
         "pathToAnimController": "Sector/Villager_HEA_Mica",
         "xmlFile": "planets/dialogue/GENERAL.xml"
+      },
+      {
+        "position": {
+          "x": 3,
+          "y": 2066,
+          "z": -51
+        },
+        "pathToAnimController": "Sector/Nomai_ANIM_SkyWatching_Idle",
+        "xmlFile": "planets/dialogue/NOMAI.xml"
+      },
+      {
+        "position": {
+          "x": 2,
+          "y": 2059,
+          "z": -50
+        },
+        "pathToAnimController": "Sector/Ghostbird_IP_ANIM",
+        "xmlFile": "planets/dialogue/OWLK.xml"
+      }
+    ],
+    "shuttles": [
+      {
+        "id": "RangerShuttle",
+        "position": {
+          "x": -45.9,
+          "y": 2100,
+          "z": -26.5
+        },
+        "rotation": {
+          "x": 270,
+          "y": 240,
+          "z": 0
+        }
       }
     ]
   },
@@ -303,6 +396,20 @@
           "z": 0
         },
         "radius": 200
+      }
+    ],
+    "creditsVolume": [
+      {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "radius": 100,
+        "creditsType": "kazoo",
+        "deathType": "meditation",
+        "gameOverText": "GameOverVictory",
+        "rename": "VOLUME_Victory"
       }
     ]
   }

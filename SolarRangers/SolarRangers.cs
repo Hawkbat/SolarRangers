@@ -74,16 +74,6 @@ namespace SolarRangers
                         AnglerCombatantController.Merge(angler);
                 });
             };
-
-            // Music:
-            // Steven McDonald: Awakening (edit for escape music?)
-            // Steven McDonald: Tempest (intense combat music)
-            // Steven McDonald: To the Death (moderate combat music)
-            // Steven McDonald: Spearhead (moderate combat music)
-            // Steven McDonald: Ascend (victory music)
-            // Steven McDonald: Legend (victory music)
-
-            // Matthew Pablo: Tactical Pursuit (moderate combat music)
         }
 
         public static void Log(string msg, MessageType type = MessageType.Info)

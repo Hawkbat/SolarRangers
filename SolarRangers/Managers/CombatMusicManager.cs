@@ -11,6 +11,9 @@ namespace SolarRangers.Managers
     public class CombatMusicManager : AbstractManager<CombatMusicManager>
     {
         static readonly List<AudioClip> combatMusicClips = [];
+        AudioClip bossFightMusicClip;
+        AudioClip escapeMusicClip;
+        AudioClip victoryMusicClip;
 
         OWAudioSource audioSource;
         VillageMusicVolume villageMusic;
@@ -25,6 +28,12 @@ namespace SolarRangers.Managers
                 combatMusicClips.Add(SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Tempest.mp3"));
                 combatMusicClips.Add(SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Spearhead.mp3"));
             }
+            if (!bossFightMusicClip)
+                bossFightMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Titan.mp3");
+            if (!escapeMusicClip)
+                escapeMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Awakening.mp3");
+            if (!victoryMusicClip)
+                victoryMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Legend.mp3");
 
             var audioObj = new GameObject("AudioSource");
             audioObj.transform.SetParent(transform, false);
@@ -34,6 +43,16 @@ namespace SolarRangers.Managers
             audioSource.SetTrack(OWAudioMixer.TrackName.Music);
             audioObj.SetActive(true);
         }
+
+        // Music:
+        // Steven McDonald: Awakening (edit for escape music?)
+        // Steven McDonald: Tempest (intense combat music)
+        // Steven McDonald: To the Death (moderate combat music)
+        // Steven McDonald: Spearhead (moderate combat music)
+        // Steven McDonald: Ascend (victory music)
+        // Steven McDonald: Legend (victory music)
+
+        // Matthew Pablo: Tactical Pursuit (moderate combat music)
 
         void Update()
         {
@@ -56,13 +75,45 @@ namespace SolarRangers.Managers
 
             if (controlsMusic)
             {
-                if (!audioSource.isPlaying)
+                switch (JamScenarioManager.GetState())
                 {
-                    audioSource.clip = combatMusicClips[combatMusicClipIndex];
-                    combatMusicClipIndex = (combatMusicClipIndex + 1) % combatMusicClips.Count;
-                    audioSource.SetMaxVolume(0.75f);
-                    audioSource.Play();
+                    case JamScenarioManager.State.Initial:
+                    case JamScenarioManager.State.OuterDefenses:
+                    case JamScenarioManager.State.InnerDefenses:
+                        if (!audioSource.isPlaying)
+                        {
+                            audioSource.clip = combatMusicClips[combatMusicClipIndex];
+                            combatMusicClipIndex = (combatMusicClipIndex + 1) % combatMusicClips.Count;
+                            audioSource.SetMaxVolume(0.75f);
+                            audioSource.Play();
+                        }
+                        break;
+                    case JamScenarioManager.State.BossFight:
+                        TransitionTo(bossFightMusicClip);
+                        break;
+                    case JamScenarioManager.State.Escape:
+                        TransitionTo(escapeMusicClip);
+                        break;
+                    case JamScenarioManager.State.Ending:
+                        TransitionTo(victoryMusicClip);
+                        break;
                 }
+
+            }
+        }
+
+        void TransitionTo(AudioClip clip)
+        {
+            if (audioSource.clip != clip && !audioSource.IsFadingOut())
+            {
+                audioSource.FadeOut(0.5f);
+            }
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = clip;
+                audioSource.SetMaxVolume(1f);
+                audioSource.FadeIn(0f);
+                audioSource.Play();
             }
         }
     }

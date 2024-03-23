@@ -41,6 +41,16 @@ namespace SolarRangers.Managers
             Explode(attacker, damage, parent, position, 5f, AudioType.BH_MeteorImpact);
         }
 
+        public static void HugeExplosion(ICombatant attacker, float damage, Transform parent, Vector3 position)
+        {
+            Explode(attacker, damage, parent, position, 20f, AudioType.BH_MeteorImpact);
+        }
+
+        public static void MassiveExplosion(ICombatant attacker, float damage, Transform parent, Vector3 position)
+        {
+            Explode(attacker, damage, parent, position, 50f, AudioType.BH_MeteorImpact);
+        }
+
         static void Explode(ICombatant attacker, float damage, Transform parent, Vector3 position, float size, AudioType sound)
         {
             if (!Instance.explosionPool.TryDequeue(out var explosion))
@@ -77,8 +87,8 @@ namespace SolarRangers.Managers
                 owAudioSource._audioSource = audioSource;
                 owAudioSource.SetTrack(OWAudioMixer.TrackName.Environment_Unfiltered);
                 soundObj.SetActive(true);
-                owAudioSource.maxDistance = 500f;
-                owAudioSource.minDistance = 15f;
+                owAudioSource.maxDistance = 2000f * size;
+                owAudioSource.minDistance = 15f * size;
                 owAudioSource.dopplerLevel = 0f;
                 owAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
                 owAudioSource.spatialBlend = 1f;
@@ -90,6 +100,8 @@ namespace SolarRangers.Managers
                 }
                 explosion._playing = true;
                 explosion.enabled = true;
+
+                explosion.gameObject.GetAddComponent<GenericNoiseMaker>().Init(true, 200f * size);
 
                 if (damage > 0f)
                 {
@@ -108,6 +120,7 @@ namespace SolarRangers.Managers
         {
             explosion.enabled = false;
             explosion.transform.SetParent(null);
+            explosion.gameObject.GetAddComponent<GenericNoiseMaker>().SetActivation(false);
             Instance.explosionPool.Enqueue(explosion);
         }
     }

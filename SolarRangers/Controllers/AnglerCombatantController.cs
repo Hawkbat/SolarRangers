@@ -1,5 +1,6 @@
 ﻿using SolarRangers.Interfaces;
 using SolarRangers.Managers;
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace SolarRangers.Controllers
 {
     public class AnglerCombatantController : AbstractCombatantController, IDestructible
     {
+        const float MECHA_DETECTION_RANGE = 2000f;
+
         const float INITIAL_ACCELERATION = 40f;
         const float INITIAL_ARRIVAL_DISTANCE = 100f;
         const float INITIAL_CHASE_SPEED = 75f;
@@ -21,8 +24,8 @@ namespace SolarRangers.Controllers
         static Vector3 INITIAL_MOUTH_OFFSET = new(0f, 2f, 60f);
 
         const float HEALTH_FACTOR = 500f;
-        const float STUN_CHANCE_FACTOR = 1f / 200f;
-        const float STUN_DURATION_FACTOR = 1f / 25f;
+        const float STUN_THRESHOLD = 100f;
+        const float STUN_DURATION = 3f;
         const float DEATH_EXPLOSION_LARGE_THRESHOLD = 0.75f;
         const float DEATH_EXPLOSION_MEDIUM_THRESHOLD = 0.25f;
         const float EAT_PLAYER_SCALE_THRESHOLD = 0.5f;
@@ -34,8 +37,9 @@ namespace SolarRangers.Controllers
         AnglerfishController angler;
         AnglerfishAnimController anglerAnim;
         AnglerfishAudioController anglerAudio;
+        List<Transform> cybernetics = [];
 
-        public override string GetNameKey() => "CombatantAngler";
+        public override string GetNameKey() => isMecha ? "CombatantMechaAngler" : "CombatantAngler";
         public override bool CanTarget() => !IsDestroyed();
         public float GetHealth() => health;
         public float GetMaxHealth() => maxHealth;
@@ -63,10 +67,10 @@ namespace SolarRangers.Controllers
             this.isMecha = isMecha;
             health = maxHealth = HEALTH_FACTOR * scale;
             transform.localScale = Vector3.one * scale;
-            var gradualScale = Mathf.Sqrt(scale);
             if (!angler) Awake();
             if (scale != 1f)
             {
+                var gradualScale = Mathf.Sqrt(scale);
                 angler._acceleration = INITIAL_ACCELERATION * gradualScale;
                 angler._arrivalDistance = INITIAL_ARRIVAL_DISTANCE * gradualScale;
                 angler._chaseSpeed = INITIAL_CHASE_SPEED * gradualScale;
@@ -80,7 +84,12 @@ namespace SolarRangers.Controllers
 
             if (isMecha)
             {
-                // spawn cyborg attachments
+                var bodyImplant = ObjectUtils.SpawnPrefab("Angler_Implant_body02", transform, "Beast_Anglerfish/B_angler_root/B_angler_body01/B_angler_body02");
+                cybernetics.Add(bodyImplant);
+                var engineImplant = ObjectUtils.SpawnPrefab("Angler_Implant_engine", transform, "Beast_Anglerfish/B_angler_root/B_angler_body01");
+                cybernetics.Add(engineImplant);
+                var jawImplant = ObjectUtils.SpawnPrefab("Angler_Implant_jaw", transform, "Beast_Anglerfish/B_angler_root/B_angler_body01/B_angler_body02/B_angler_jaw");
+                cybernetics.Add(jawImplant);
             }
         }
 
@@ -99,10 +108,9 @@ namespace SolarRangers.Controllers
         {
             if (IsDestroyed()) return false;
             health = Mathf.Max(health - damage, 0f);
-            var stunChance = damage * STUN_CHANCE_FACTOR;
-            if (UnityEngine.Random.value < stunChance)
+            if (damage >= STUN_THRESHOLD)
             {
-                Stun(damage * STUN_DURATION_FACTOR);
+                Stun(STUN_DURATION);
             }
             if (health <= 0f)
             {
@@ -115,6 +123,20 @@ namespace SolarRangers.Controllers
         {
             if (isMecha)
             {
+                foreach (var c in cybernetics)
+                {
+                    foreach (Transform t in c)
+                    {
+                        foreach (MeshFilter mf in t.GetComponentsInChildren<MeshFilter>())
+                        {
+                            var mc = mf.gameObject.AddComponent<MeshCollider>();
+                            mc.sharedMesh = mf.sharedMesh;
+                            mc.convex = true;
+                            mf.gameObject.AddComponent<OWCollider>();
+                        }
+                        ObjectUtils.ConvertToPhysicsProp(t.gameObject, angler._anglerBody);
+                    }
+                }
                 if (scale > DEATH_EXPLOSION_LARGE_THRESHOLD)
                 {
                     ExplosionManager.LargeExplosion(this, 50f, transform, transform.position);
@@ -144,5 +166,17 @@ namespace SolarRangers.Controllers
             anglerAudio = GetComponentInChildren<AnglerfishAudioController>();
         }
 
+        void Update()
+        {
+            if (isMecha && !IsDestroyed() && angler._currentState != AnglerfishController.AnglerState.Stunned)
+            {
+                var dist = Vector3.Distance(transform.position, Locator.GetPlayerTransform().position);
+                if (dist < MECHA_DETECTION_RANGE && angler._currentState != AnglerfishController.AnglerState.Chasing)
+                {
+                    angler._targetBody = Locator.GetPlayerBody();
+                    angler.ChangeState(AnglerfishController.AnglerState.Chasing);
+                }
+            }
+        }
     }
 }

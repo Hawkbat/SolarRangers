@@ -96,9 +96,11 @@ namespace SolarRangers.Controllers
             audioSrc.AssignAudioLibraryClip(AudioType.Ghost_Chase);
             audioSrc.spatialBlend = 1f;
             audioSrc.minDistance = 15f;
-            audioSrc.maxDistance = 500f;
+            audioSrc.maxDistance = 1000f;
             audioSrc.dopplerLevel = 0f;
             audioSrc.pitch = 2.5f;
+
+            GenericNoiseMaker.Merge(this, true, 150f);
 
             setUp = true;
         }

@@ -133,5 +133,16 @@ namespace SolarRangers
         {
             return !!__instance._onlyDetectableFluid;
         }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(NoiseMaker), nameof(NoiseMaker.GetNoiseOrigin))]
+        public static bool NoiseMaker_GetNoiseOrigin(NoiseMaker __instance, ref Vector3 __result)
+        {
+            if (!__instance._attachedBody)
+            {
+                __result = __instance.transform.position;
+                return false;
+            }
+            return true;
+        }
     }
 }

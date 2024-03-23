@@ -23,6 +23,7 @@ namespace SolarRangers.Controllers
         public override string GetNameKey() => "CombatantReactor";
         public override bool CanTarget() => !reactorCore.IsDestroyed();
         public bool IsCoreExposed() => coreExposed;
+        public bool IsCoreDestroyed() => isKillSequence;
 
         public static ReactorCombatantController Spawn()
         {
@@ -49,44 +50,7 @@ namespace SolarRangers.Controllers
 
         IEnumerator DoKillSequence()
         {
-            if (!coreExposed || coreClosing) StartCoroutine(DoOpenCore());
-
-            var countdownTimer = 90f;
-
-            var shipNotificationDisplay = Locator.GetShipTransform().GetComponentInChildren<ShipNotificationDisplay>();
-
-            var evacuateText = SolarRangers.NewHorizons.GetTranslationForUI("NotificationEvacuate");
-            var evacuateNotif = new NotificationData(NotificationTarget.All, evacuateText);
-            NotificationManager.SharedInstance.PostNotification(evacuateNotif, true);
-
-            var countdownNotif = new NotificationData(NotificationTarget.All, string.Empty);
-            UpdateNotificationText();
-            NotificationManager.SharedInstance.PostNotification(countdownNotif, true);
-
-            while (countdownTimer > 0f)
-            {
-                yield return null;
-                countdownTimer = Mathf.Max(countdownTimer - Time.deltaTime, 0f);
-                UpdateNotificationText();
-            }
-
-            NotificationManager.SharedInstance.UnpinNotification(countdownNotif);
-            NotificationManager.SharedInstance.UnpinNotification(evacuateNotif);
-
-            void UpdateNotificationText()
-            {
-                var countdownTimeSpan = TimeSpan.FromSeconds(countdownTimer);
-                var countdownTimeText = countdownTimeSpan.ToString(@"mm\:ss\.ff");
-                countdownNotif.displayMessage = countdownTimeText;
-
-                var index = shipNotificationDisplay.FindDuplicateIndex(countdownNotif);
-                if (index >= 0)
-                {
-                    var scrollEffect = shipNotificationDisplay._listDisplayData[index].TextScrollEffect;
-                    scrollEffect.SetDisplayString(countdownTimeText);
-                    scrollEffect.SetTextWithNoEffect();
-                }
-            }
+            if (!coreExposed || coreClosing) yield return DoOpenCore();
         }
 
         IEnumerator DoOpenCore()

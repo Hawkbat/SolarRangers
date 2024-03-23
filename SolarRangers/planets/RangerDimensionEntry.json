@@ -28,7 +28,7 @@
     "nodes": [
       {
         "name": "RangerEntryInner",
-        "linksTo": "RangerTunnel1Outer",
+        "linksTo": "RangerReactorOuter",
         "scale": 1,
         "position": {
           "x": 0,
@@ -54,6 +54,21 @@
           "z": 90
         },
         "scale": 200,
+        "keepLoaded": true
+      },
+      {
+        "path": "OrbitalProbeCannon_Body/Sector_OrbitalProbeCannon/Interactables_OrbitalProbeCannon/Interactables_VisibleOrbitalProbeCannon/Prefab_NOM_Airlock (1)",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 230,
+          "z": 340
+        },
+        "scale": 20,
         "keepLoaded": true
       }
     ]
