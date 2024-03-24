@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/xen-42/outer-wilds-new-horizons/main/NewHorizons/Schemas/star_system_schema.json",
+  "initialReveal": [ "RANGER_EGGSTAR_RUMOR" ],
+  "entryPositions": [
+    {
+      "id": "RANGER_EGGSTAR",
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "curiosities": [
+    {
+      "id": "RANGER_EGGSTAR",
+      "color": {
+        "r": 200,
+        "g": 0,
+        "b": 0,
+        "a": 255
+      },
+      "highlightColor": {
+        "r": 200,
+        "g": 50,
+        "b": 50,
+        "a": 255
+      }
+    }
+  ]
+}

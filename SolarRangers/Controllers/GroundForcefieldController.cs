@@ -13,8 +13,6 @@ namespace SolarRangers.Controllers
         BeaconDestructibleController beacon;
         GameObject fieldObj;
 
-        static GameObject fieldPrefab;
-
         public static GroundForcefieldController Spawn(BeaconDestructibleController beacon)
         {
             var field = new GameObject("GroundForcefield").AddComponent<GroundForcefieldController>();
@@ -26,17 +24,8 @@ namespace SolarRangers.Controllers
         {
             this.beacon = beacon;
 
-            if (!fieldPrefab)
-            {
-                fieldPrefab = SolarRangers.NewHorizons.GetPlanet("Egg Star").transform.Find("Sector/PREFAB_GroundForcefield").gameObject;
-                fieldPrefab.SetActive(false);
-            }
-
-            fieldObj = Instantiate(fieldPrefab, transform);
-            fieldObj.transform.localPosition = Vector3.zero;
-            fieldObj.transform.localEulerAngles = Vector3.zero;
-            fieldObj.transform.localScale = Vector3.one;
-            fieldObj.SetActive(true);
+            fieldObj = ObjectUtils.SpawnPrefab("GroundForcefield", transform).gameObject;
+            active = true;
         }
 
         void Update()
@@ -44,6 +33,11 @@ namespace SolarRangers.Controllers
             if (active && beacon.IsDestroyed())
             {
                 active = false;
+                foreach (var probe in fieldObj.GetComponentsInChildren<SurveyorProbe>())
+                {
+                    probe.transform.parent = null;
+                    probe.ExternalRetrieve(true);
+                }
                 fieldObj.SetActive(false);
             }
         }

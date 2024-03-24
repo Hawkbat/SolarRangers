@@ -12,7 +12,7 @@ namespace SolarRangers.Controllers
     public class EggDroneCombatantController : AbstractCombatantController, IDestructible
     {
         const float DETECTION_DISTANCE = 1500f;
-        const float MAX_HEALTH = 50f;
+        const float MAX_HEALTH = 25f;
 
         float health;
         bool chasing;

@@ -1,0 +1,84 @@
+ManifestFileVersion: 0
+CRC: 1448114998
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e5e38e0b2cecc55321187fcf3610b0e7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 72ebce71f949e306114244c58b3347d6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3e2cd530bcd6ab93471c4405ca1c5b6a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fbb2498122f7e23a2e87544333cb528f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b510d252798b94e5d72fb33fbb25a1ad, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d3e77ae3309b6f323de07b456da83fb0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f913c288c393f80a7e923fc1c775f4fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7a54be8810d01e9ae854ddb2580bb460, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 25b7e56961bf1df33ed31b8c786ab1c3, type: 3}
+- Class: 114
+  Script: {fileID: -2144047439, guid: bc81085b06da409428715cdd6ba25ffe, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/SolarRangers/Objects/EggEmpire/Beacon.prefab
+- Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_jaw.prefab
+- Assets/SolarRangers/Materials/Structure_EGG_RedMetal_mat.mat
+- Assets/SolarRangers/Materials/EggEnergy_Emissive.png
+- Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_engine.prefab
+- Assets/SolarRangers/Objects/EggEmpire/Angler_EyePiece.prefab
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_EyePiece.fbx
+- Assets/SolarRangers/Materials/Structure_EGG_Porcelain_mat.mat
+- Assets/SolarRangers/Materials/Props_EGG_SmallTractorBeam_Emissive_mat.mat
+- Assets/SolarRangers/Materials/Evil_EGG.mat
+- Assets/SolarRangers/Objects/EggEmpire/Drone.prefab
+- Assets/SolarRangers/Materials/Structure_EGG_Airlock_mat.mat
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/ForcefieldCollision.fbx
+- Assets/SolarRangers/Objects/EggEmpire/Materials/Holo_Eye.mat
+- Assets/SolarRangers/Materials/Evil_EGG_d.png
+- Assets/SolarRangers/Materials/Evil_EGG_s.png
+- Assets/SolarRangers/Materials/Structure_EGG_RedGlow_mat.mat
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_Engine.fbx
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_JawClamp.fbx
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_EyeLens.fbx
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Airlock_CapEmpty.fbx
+- Assets/SolarRangers/Materials/Effects_EGG_VolumetricLight.mat
+- Assets/SolarRangers/Materials/Effects_EGG_Forcefield_mat.mat
+- Assets/SolarRangers/Materials/Evil_EGG_n.png
+- Assets/SolarRangers/Materials/Structure_EGG_StarTile_Glow_s.png
+- Assets/SolarRangers/Objects/EggEmpire/GroundForcefield.prefab
+- Assets/SolarRangers/Objects/EggEmpire/Airlock_Cap_Empty.prefab
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/Airlock_Cap.fbx
+- Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_body02.prefab
+- Assets/SolarRangers/Materials/Evil_EGG_ao.png
+Dependencies: []

@@ -2,15 +2,6 @@
 	<NameField>GENERAL</NameField>
 
 	<DialogueNode>
-		<Name>ENTRY</Name>
-		<EntryCondition>RANGER_SPOKE_TO_TROUT</EntryCondition>
-		<Dialogue>
-			<Page>GENERAL_ENTRY_1</Page>
-		</Dialogue>
-		<DialogueTarget>MAIN</DialogueTarget>
-	</DialogueNode>
-
-	<DialogueNode>
 		<Name>INTRO_1</Name>
 		<EntryCondition>DEFAULT</EntryCondition>
 		<Dialogue>
@@ -125,6 +116,32 @@
 		<Dialogue>
 			<Page>GENERAL_EXIT_1</Page>
 		</Dialogue>
+	</DialogueNode>
+
+	<DialogueNode>
+		<Name>ENTRY</Name>
+		<EntryCondition>RANGER_SPOKE_TO_TROUT</EntryCondition>
+		<Dialogue>
+			<Page>GENERAL_ENTRY_1</Page>
+		</Dialogue>
+		<DialogueTarget>MAIN</DialogueTarget>
+	</DialogueNode>
+
+	<DialogueNode>
+		<Name>VICTORY</Name>
+		<EntryCondition>RANGER_VICTORY</EntryCondition>
+		<Dialogue>
+			<Page>GENERAL_VICTORY_1</Page>
+			<Page>GENERAL_VICTORY_2</Page>
+			<Page>GENERAL_VICTORY_3</Page>
+			<Page>GENERAL_VICTORY_4</Page>
+		</Dialogue>
+		<DialogueOptionsList>
+			<DialogueOption>
+				<Text>GENERAL_VICTORY_CHOICE_1</Text>
+				<ConditionToSet>RANGER_VICTORY_ENDING</ConditionToSet>
+			</DialogueOption>
+		</DialogueOptionsList>
 	</DialogueNode>
 
 </DialogueTree>

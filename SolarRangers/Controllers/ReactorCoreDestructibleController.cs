@@ -35,6 +35,7 @@ namespace SolarRangers.Controllers
             health = Mathf.Max(health - damage, 0f);
             if (health <= 0f)
             {
+                coreSphere.SetActive(false);
                 ExplosionManager.LargeExplosion(reactor, 25f, transform, transform.position);
             }
             return true;

@@ -306,6 +306,52 @@
         }
       },
       {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/AnglerFishExhibit/AnglerFishTankPivot/Beast_Anglerfish",
+        "rename": "Ernesto",
+        "position": {
+          "x": 27.9075,
+          "y": 1987.99,
+          "z": 171.8913
+        },
+        "rotation": {
+          "x": 87.2984,
+          "y": 99.1401,
+          "z": 90.00011
+        },
+        "scale": 0.05
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "position": {
+          "x": 27.9075,
+          "y": 1979.094,
+          "z": 169.3228
+        },
+        "rotation": {
+          "x": 87.2984,
+          "y": 99.1401,
+          "z": 90.00011
+        }
+      },
+      {
+        "assetBundle": "assetbundles/solarrangers",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_body02.prefab",
+        "parentPath": "Sector/Ernesto/B_angler_root/B_angler_body01/B_angler_body02",
+        "isRelativeToParent": true
+      },
+      {
+        "assetBundle": "assetbundles/solarrangers",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_jaw.prefab",
+        "parentPath": "Sector/Ernesto/B_angler_root/B_angler_body01/B_angler_body02/B_angler_jaw",
+        "isRelativeToParent": true
+      },
+      {
+        "assetBundle": "assetbundles/solarrangers",
+        "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_engine.prefab",
+        "parentPath": "Sector/Ernesto/B_angler_root/B_angler_body01",
+        "isRelativeToParent": true
+      },
+      {
         "rename": "PREFAB_Beacon",
         "path": "Assets/SolarRangers/Objects/EggEmpire/Beacon.prefab",
         "assetBundle": "assetbundles/solarrangers",
@@ -369,6 +415,20 @@
         },
         "pathToAnimController": "Sector/Ghostbird_IP_ANIM",
         "xmlFile": "planets/dialogue/OWLK.xml"
+      },
+      {
+        "position": {
+          "x": 0,
+          "y": 0.5,
+          "z": 0
+        },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Ernesto",
+        "radius": 8,
+        "range": 8,
+        "lookAtRadius": 32,
+        "pathToAnimController": "Sector/Ernesto",
+        "xmlFile": "planets/dialogue/ERNESTO.xml"
       }
     ],
     "shuttles": [
@@ -410,7 +470,23 @@
         "deathType": "meditation",
         "gameOverText": "GameOverVictory",
         "rename": "VOLUME_Victory"
+      },
+      {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "radius": 100,
+        "creditsType": "kazoo",
+        "deathType": "meditation",
+        "gameOverText": "GameOverErnesto",
+        "rename": "VOLUME_Ernesto"
       }
     ]
+  },
+  "ShipLog": {
+    "xmlFile": "planets/shiplogs/EGG_STAR.xml",
+    "spriteFolder": "planets/shiplogs/sprites/"
   }
 }

@@ -1,0 +1,26 @@
+﻿<AstroObjectEntry xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/shiplog_schema.xsd">
+	<ID>Egg Star</ID>
+	<Entry>
+		<ID>RANGER_EGGSTAR</ID>
+		<Name>RANGER_EGGSTAR</Name>
+		<Curiosity>RANGER_EGGSTAR</Curiosity>
+		<IsCuriosity/>
+
+		<RumorFact>
+			<ID>RANGER_EGGSTAR_RUMOR</ID>
+			<RumorName>RANGER_EGGSTAR_RUMOR_NAME</RumorName>
+			<Text>RANGER_EGGSTAR_RUMOR</Text>
+		</RumorFact>
+
+		<ExploreFact>
+			<ID>RANGER_EGGSTAR_DISCOVERY</ID>
+			<Text>RANGER_EGGSTAR_DISCOVERY</Text>
+		</ExploreFact>
+
+		<ExploreFact>
+			<ID>RANGER_EGGSTAR_VICTORY</ID>
+			<Text>RANGER_EGGSTAR_VICTORY</Text>
+		</ExploreFact>
+	</Entry>
+</AstroObjectEntry>

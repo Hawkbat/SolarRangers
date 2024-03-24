@@ -1,0 +1,15 @@
+
+Mid-term
+
+Figure out why evil chert material isn't working
+Modify turret materials
+Add more NPCs and decorations to Timber One
+Add medal ceremony cutscene
+Add game over cutscene to "trigger" supernova (just fire it off X seconds before base nova)
+
+Long-term
+
+New scenario in the base game solar system
+Regenerating "shield" to prevent chip damage from breaking ship components
+Add ship wings as new hull/component pieces so they can be temporarily disabled individually
+Mission to destroy the anglerfish egg nest

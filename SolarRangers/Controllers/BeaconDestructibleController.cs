@@ -41,6 +41,11 @@ namespace SolarRangers.Controllers
             health = Mathf.Clamp(health - damage, 0f, GetMaxHealth());
             if (health <= 0f)
             {
+                foreach (var probe in beaconObj.GetComponentsInChildren<SurveyorProbe>())
+                {
+                    probe.transform.parent = null;
+                    probe.ExternalRetrieve(true);
+                }
                 beaconObj.SetActive(false);
                 ExplosionManager.MediumExplosion(SolarRangers.WorldCombatant, 50f, transform, transform.position);
             }

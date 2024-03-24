@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -34,17 +35,23 @@ namespace SolarRangers.Controllers
 
         public void Init()
         {
+            coreCasingAudio.SetTrack(OWAudioMixer.TrackName.Environment_Unfiltered);
+            coreCasingAudio.minDistance = 1500f;
+            coreCasingAudio.maxDistance = 5000f;
 
+            activeRoutine = StartCoroutine(DoBossSequence());
         }
 
         IEnumerator DoBossSequence()
         {
+            yield return new WaitForSeconds(1f);
             while (!reactorCore.IsDestroyed())
             {
-                yield return new WaitForSeconds(10f);
-                yield return DoCloseCore();
+                SpawnAdds();
                 yield return new WaitForSeconds(20f);
                 yield return DoOpenCore();
+                yield return new WaitForSeconds(10f);
+                yield return DoCloseCore();
             }
         }
 
@@ -57,7 +64,8 @@ namespace SolarRangers.Controllers
         {
             coreClosing = false;
             coreExposed = true;
-            coreCasingAudio.PlayOneShot(AudioType.NomaiTimeLoopOpen);
+            coreCasingAudio.AssignAudioLibraryClip(AudioType.NomaiTimeLoopOpen);
+            coreCasingAudio.Play();
             var duration = 3f;
             var openAngle = 90f;
             for (int i = 0; i < panelAnimators.Length; i++)
@@ -71,7 +79,8 @@ namespace SolarRangers.Controllers
         IEnumerator DoCloseCore()
         {
             coreClosing = true;
-            coreCasingAudio.PlayOneShot(AudioType.NomaiTimeLoopClose);
+            coreCasingAudio.AssignAudioLibraryClip(AudioType.NomaiTimeLoopClose);
+            coreCasingAudio.Play();
             var duration = 3f;
             for (int i = 0; i < panelAnimators.Length; i++)
             {
@@ -80,6 +89,18 @@ namespace SolarRangers.Controllers
             yield return new WaitForSeconds(duration);
             coreExposed = false;
             coreClosing = false;
+        }
+
+        void SpawnAdds()
+        {
+            var planet = transform.root;
+            var player = Locator.GetPlayerTransform();
+            var diff = planet.position - player.position;
+            if (diff.magnitude > 300f) diff = diff.normalized * 300f;
+            var rot = Quaternion.LookRotation(-diff.normalized, transform.up);
+            ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff, rot.eulerAngles);
+            ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff + Vector3.up * 10f, rot.eulerAngles);
+            ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff + Vector3.down * 10f, rot.eulerAngles);
         }
 
         void Awake()
@@ -112,8 +133,6 @@ namespace SolarRangers.Controllers
             Destroy(coreCasing.transform.Find("BlackHoleAttractVolume").gameObject);
             Destroy(coreCasing.transform.Find("BlackHoleVanishVolume").gameObject);
             Destroy(timeLoopCoreController);
-
-            activeRoutine = StartCoroutine(DoBossSequence());
         }
 
         void Update()

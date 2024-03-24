@@ -73,6 +73,11 @@ namespace SolarRangers.Managers
                 Locator.GetGlobalMusicController().enabled = true;
             }
 
+            if (controlsMusic && Locator.GetGlobalMusicController()._travelSource.isPlaying)
+            {
+                Locator.GetGlobalMusicController()._travelSource.Stop();
+            }
+
             if (controlsMusic)
             {
                 switch (JamScenarioManager.GetState())
@@ -95,15 +100,28 @@ namespace SolarRangers.Managers
                         TransitionTo(escapeMusicClip);
                         break;
                     case JamScenarioManager.State.Ending:
+                        if (audioSource.audioLibraryClip != AudioType.EYE_EndOfGame && !audioSource.IsFadingOut())
+                        {
+                            audioSource.FadeOut(0.5f);
+                        }
+                        if (audioSource.audioLibraryClip != AudioType.EYE_EndOfGame && !audioSource.isPlaying)
+                        {
+                            audioSource.AssignAudioLibraryClip(AudioType.EYE_EndOfGame);
+                            audioSource.FadeIn(0f);
+                            audioSource.Stop();
+                            audioSource.PlayDelayed(2f);
+                        }
+                        break;
+                    case JamScenarioManager.State.Epilogue:
                         TransitionTo(victoryMusicClip);
                         break;
                 }
-
             }
         }
 
         void TransitionTo(AudioClip clip)
         {
+            audioSource._audioLibraryClip = AudioType.None;
             if (audioSource.clip != clip && !audioSource.IsFadingOut())
             {
                 audioSource.FadeOut(0.5f);

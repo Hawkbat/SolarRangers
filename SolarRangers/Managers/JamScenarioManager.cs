@@ -19,13 +19,13 @@ namespace SolarRangers.Managers
             (new(219.0927f, -612.7933f, 509.4692f), new(349.8737f, 305.4434f, 221.8733f)),
             (new(371.6974f, 247.6658f, 692.604f), new(339.2303f, 292.143f, 289.0709f)),
             (new(-255.8235f, 356.976f, 702.2967f), new(355.6956f, 67.9834f, 63.86371f)),
-            (new(582.8622f, 584.3083f, -11.08832f), new(30.21015f, 44.67143f, 328.7579f)),
-            (new(-15.53556f, 672.9326f, -483.236f), new(320.0523f, 345.0906f, 7.339639f)),
-            (new(-396.4197f, 730.2441f, 5.966614f), new(348.5993f, 165.9272f, 336.4727f)),
+            //(new(582.8622f, 584.3083f, -11.08832f), new(30.21015f, 44.67143f, 328.7579f)),
+            //(new(-15.53556f, 672.9326f, -483.236f), new(320.0523f, 345.0906f, 7.339639f)),
+            //(new(-396.4197f, 730.2441f, 5.966614f), new(348.5993f, 165.9272f, 336.4727f)),
         ];
         readonly static List<(Vector3, Vector3)> shieldedBeaconLocs = [
             (new(-164.1224f, 218.0329f, -781.5752f), new(348.2879f, 286.2274f, 76.60799f)),
-            (new(-119.0013f, -584.2071f, -577.3982f), new(46.15285f, 355.6879f, 171.7899f)),
+            //(new(-119.0013f, -584.2071f, -577.3982f), new(46.15285f, 355.6879f, 171.7899f)),
             (new(-81.47157f, -156.3072f, 805.6272f), new(320.8534f, 72.34212f, 105.7312f)),
             (new(177.8307f, 707.4901f, 383.0002f), new(329.7046f, 236.3416f, 344.4792f)),
         ];
@@ -137,12 +137,28 @@ namespace SolarRangers.Managers
                 case State.Ending:
 
                     break;
+                case State.Epilogue:
+
+                    break;
+            }
+            if (state == State.Epilogue && DialogueConditionManager.SharedInstance.GetConditionState("RANGER_VICTORY_ENDING"))
+            {
+                var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Victory");
+                creditsVolume.position = Locator.GetPlayerTransform().position;
+            }
+            if (state != State.Epilogue && DialogueConditionManager.SharedInstance.GetConditionState("RANGER_ERNESTO_ENDING"))
+            {
+                state = State.Epilogue;
+                var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Ernesto");
+                creditsVolume.position = Locator.GetPlayerTransform().position;
             }
         }
 
         IEnumerator DoStartOuterDefensesPhase()
         {
             SolarRangers.CombatModeActive = true;
+
+            Locator.GetShipLogManager().RevealFact("RANGER_EGGSTAR_DISCOVERY");
 
             ObjectUtils.PlaceOnPlanet(EggTowerCombatantController.Spawn(), eggStar, new Vector3(-745f, -385f, 154f), new Vector3(55f, 44f, 131f));
             ObjectUtils.PlaceOnPlanet(EggTowerCombatantController.Spawn(), eggStar, new Vector3(-712f, -187f, -431f), new Vector3(64f, 135f, 251f));
@@ -173,10 +189,8 @@ namespace SolarRangers.Managers
                 ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(eggStar), eggStar, pos, rot.eulerAngles);
             }
 
-            var targetPos = eggStar.transform.TransformPoint(-2000f, 0f, -100f);
-            var targetRot = eggStar.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
             eggStarAirlock.ResetToOpenState();
-            yield return DoCutscene(CutsceneBody, targetPos, targetRot);
+            yield return DoCutscene(CutsceneBody, eggStar.transform, new Vector3(-2000f, 0f, -100f), Quaternion.Euler(0f, 90f, 0f));
             eggStarAirlock.Close(eggStarAirlock._closeSwitches[0]);
 
             var notificationTemplateText = SolarRangers.NewHorizons.GetTranslationForUI("NotificationBeacons");
@@ -215,15 +229,13 @@ namespace SolarRangers.Managers
             var notification = new NotificationData(NotificationTarget.All, notificationText);
             NotificationManager.SharedInstance.PostNotification(notification, true);
 
-            var targetPos = eggStar.transform.TransformPoint(-2000f, 0f, -100f);
-            var targetRot = eggStar.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
             eggStarAirlock.ResetToOpenState();
-            yield return DoCutscene(CutsceneBody, targetPos, targetRot);
+            yield return DoCutscene(CutsceneBody, eggStar.transform, new Vector3(-2000f, 0f, -100f), Quaternion.Euler(0f, 90f, 0f));
 
             var entryDimension = SolarRangers.NewHorizons.GetPlanet("RangerEntryOuter");
-            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform.Find("Sector"), 1f, true), "RangerEntryOuter", new Vector3(0f, 0f, -200f), new Vector3(0f, 0f, 0f));
-            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform.Find("Sector"), 1f, true), "RangerEntryOuter", new Vector3(0f, 200f, -100f), new Vector3(0f, 60f, 60f));
-            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform.Find("Sector"), 1f, true), "RangerEntryOuter", new Vector3(50f, -200f, -100f), new Vector3(90f, 120f, 0f));
+            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform, 0.5f, true), "RangerEntryOuter", new Vector3(0f, 0f, -200f), new Vector3(0f, 0f, 0f));
+            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform, 0.5f, true), "RangerEntryOuter", new Vector3(0f, 200f, -100f), new Vector3(0f, 60f, 60f));
+            ObjectUtils.PlaceOnPlanet(AnglerCombatantController.Spawn(entryDimension.transform, 0.5f, true), "RangerEntryOuter", new Vector3(50f, -200f, -100f), new Vector3(90f, 120f, 0f));
 
             while (state == State.InnerDefenses)
             {
@@ -256,7 +268,7 @@ namespace SolarRangers.Managers
 
         IEnumerator DoStartEscapePhase()
         {
-            escapeTimer = 90f;
+            escapeTimer = 75f;
 
             var shipNotificationDisplay = Locator.GetShipTransform().GetComponentInChildren<ShipNotificationDisplay>();
 
@@ -307,11 +319,12 @@ namespace SolarRangers.Managers
 
         IEnumerator DoEnding()
         {
-            var targetPos = eggStar.transform.TransformPoint(-2000f, 0f, -300f);
-            var targetRot = eggStar.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
-            yield return DoCutscene(CutsceneBody, targetPos, targetRot);
-            var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Victory");
-            creditsVolume.position = Locator.GetPlayerTransform().position;
+            yield return DoCutscene(CutsceneBody, eggStar.transform, new Vector3(-2000f, 0f, -300f), Quaternion.Euler(0f, 90f, 0f));
+
+            DialogueConditionManager.SharedInstance.SetConditionState("RANGER_VICTORY", true);
+            Locator.GetShipLogManager().RevealFact("RANGER_EGGSTAR_VICTORY");
+
+            state = State.Epilogue;
 
             IEnumerator CutsceneBody()
             {
@@ -321,11 +334,11 @@ namespace SolarRangers.Managers
                 eggStar.transform.Find("Sector/Prefab_NOM_Airlock (1)").gameObject.SetActive(false);
                 eggStar.transform.Find("Sector/Airlock_Cap_Empty").gameObject.SetActive(false);
                 eggStar.transform.Find("Sector/EggStarInner").gameObject.SetActive(false);
-                yield return new WaitForSeconds(8f);
+                yield return new WaitForSeconds(24f);
             }
         }
 
-        IEnumerator DoCutscene(Func<IEnumerator> action, Vector3 targetPos, Quaternion targetRot)
+        IEnumerator DoCutscene(Func<IEnumerator> action, Transform target, Vector3 targetPos, Quaternion targetRot)
         {
             var previousMode = OWInput.GetInputMode();
             OWInput.ChangeInputMode(InputMode.None);
@@ -333,14 +346,39 @@ namespace SolarRangers.Managers
             SolarRangers.CommonCameraUtility.EnterCamera(cutsceneCam);
             cutsceneCam.transform.position = Locator.GetPlayerCamera().transform.position;
             cutsceneCam.transform.rotation = Locator.GetPlayerCamera().transform.rotation;
-            yield return AsyncUtils.DoObjectLerp(cutsceneCam.transform, targetPos, targetRot, 1f);
+            yield return DoCutsceneCameraLerp(target, targetPos, targetRot);
+            var syncRoutine = StartCoroutine(DoSyncCutsceneCamera(target, targetPos, targetRot));
             yield return action();
-            targetPos = Locator.GetPlayerCamera().transform.position;
-            targetRot = Locator.GetPlayerCamera().transform.rotation;
-            yield return AsyncUtils.DoObjectLerp(cutsceneCam.transform, targetPos, targetRot, 1f);
+            StopCoroutine(syncRoutine);
+            yield return DoCutsceneCameraLerp(Locator.GetPlayerCamera().transform, Vector3.zero, Quaternion.identity);
             SolarRangers.CommonCameraUtility.ExitCamera(cutsceneCam);
             OWInput.ChangeInputMode(previousMode);
             Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
+        }
+
+        IEnumerator DoCutsceneCameraLerp(Transform target, Vector3 targetPos, Quaternion targetRot)
+        {
+            var startPos = cutsceneCam.transform.position;
+            var startRot = cutsceneCam.transform.rotation;
+            yield return AsyncUtils.DoUpdateTimer(1f, t =>
+            {
+                var pos = target.TransformPoint(targetPos);
+                var rot = target.rotation * targetRot;
+                cutsceneCam.transform.position = Vector3.Lerp(startPos, pos, t);
+                cutsceneCam.transform.rotation = Quaternion.Slerp(startRot, rot, t);
+            });
+        }
+
+        IEnumerator DoSyncCutsceneCamera(Transform target, Vector3 targetPos, Quaternion targetRot)
+        {
+            while (true)
+            {
+                yield return null;
+                var pos = target.TransformPoint(targetPos);
+                var rot = target.rotation * targetRot;
+                cutsceneCam.transform.position = pos;
+                cutsceneCam.transform.rotation = rot;
+            }
         }
 
         public enum State
@@ -351,6 +389,7 @@ namespace SolarRangers.Managers
             BossFight,
             Escape,
             Ending,
+            Epilogue,
         }
     }
 }

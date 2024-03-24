@@ -48,7 +48,7 @@ namespace SolarRangers.Managers
 
         public static void MassiveExplosion(ICombatant attacker, float damage, Transform parent, Vector3 position)
         {
-            Explode(attacker, damage, parent, position, 50f, AudioType.BH_MeteorImpact);
+            Explode(attacker, damage, parent, position, 75f, AudioType.BH_MeteorImpact);
         }
 
         static void Explode(ICombatant attacker, float damage, Transform parent, Vector3 position, float size, AudioType sound)
@@ -101,8 +101,6 @@ namespace SolarRangers.Managers
                 explosion._playing = true;
                 explosion.enabled = true;
 
-                explosion.gameObject.GetAddComponent<GenericNoiseMaker>().Init(true, 200f * size);
-
                 if (damage > 0f)
                 {
                     var damageSource = new TransientDamageSource(attacker, position);
@@ -120,7 +118,6 @@ namespace SolarRangers.Managers
         {
             explosion.enabled = false;
             explosion.transform.SetParent(null);
-            explosion.gameObject.GetAddComponent<GenericNoiseMaker>().SetActivation(false);
             Instance.explosionPool.Enqueue(explosion);
         }
     }

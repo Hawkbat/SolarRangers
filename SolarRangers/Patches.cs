@@ -22,12 +22,28 @@ namespace SolarRangers
             }
         }
 
+        [HarmonyPrefix, HarmonyPatch(typeof(ShipCockpitUI), nameof(ShipCockpitUI.OnShipComponentDamaged))]
+        public static bool ShipCockpitUI_OnShipComponentDamaged(ShipComponent shipComponent)
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            if (shipComponent.repairFraction > 0.75f) return false;
+            return true;
+        }
+
+        [HarmonyPrefix, HarmonyPatch(typeof(ShipCockpitUI), nameof(ShipCockpitUI.OnShipHullDamaged))]
+        public static bool ShipCockpitUI_OnShipHullDamaged(ShipHull shipHull)
+        {
+            if (!SolarRangers.CombatModeActive) return true;
+            if (shipHull.integrity > 0.75f) return false;
+            return true;
+        }
+
         [HarmonyPrefix, HarmonyPatch(typeof(ProbeLauncher), nameof(ProbeLauncher.TakeSnapshotWithCamera))]
         public static bool ProbeLauncher_TakeSnapshotWithCamera(ProbeCamera camera)
         {
             if (!SolarRangers.CombatModeActive) return true;
             var probe = camera.GetComponentInParent<SurveyorProbe>();
-            var sector = probe._sectorDetector.GetLastEnteredSector();
+            var sector = probe._sectorDetector ? probe._sectorDetector.GetLastEnteredSector() : null;
 
             if (PlayerState.AtFlightConsole())
             {

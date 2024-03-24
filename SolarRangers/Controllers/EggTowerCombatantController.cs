@@ -121,7 +121,7 @@ namespace SolarRangers.Controllers
             turret.transform.localPosition = new Vector3(0f, 0f, 200f);
             turret.transform.localEulerAngles = Vector3.zero;
 
-            var fireRate = 10f;
+            var fireRate = 5f;
             var fireDelay = 1f;
             var damage = 15f;
             /*

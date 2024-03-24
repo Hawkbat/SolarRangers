@@ -100,7 +100,7 @@ namespace SolarRangers.Controllers
             audioSrc.dopplerLevel = 0f;
             audioSrc.pitch = 2.5f;
 
-            GenericNoiseMaker.Merge(this, true, 150f);
+            //GenericNoiseMaker.Merge(this, true, 150f);
 
             setUp = true;
         }
