@@ -14,10 +14,10 @@ namespace SolarRangers.Managers
     {
         readonly static List<(Vector3, Vector3)> exposedBeaconLocs = [
             (new(-556.4736f, 177.3767f, -590.6564f), new(12.8713f, 313.9004f, 76.96229f)),
-            (new(386.3673f, 62.15552f, -728.5385f), new(349.1227f, 244.4996f, 84.42482f)),
+            //(new(386.3673f, 62.15552f, -728.5385f), new(349.1227f, 244.4996f, 84.42482f)),
             (new(-482.7887f, -488.1671f, 465.8023f), new(28.48313f, 67.90216f, 130.966f)),
             (new(219.0927f, -612.7933f, 509.4692f), new(349.8737f, 305.4434f, 221.8733f)),
-            (new(371.6974f, 247.6658f, 692.604f), new(339.2303f, 292.143f, 289.0709f)),
+            //(new(371.6974f, 247.6658f, 692.604f), new(339.2303f, 292.143f, 289.0709f)),
             (new(-255.8235f, 356.976f, 702.2967f), new(355.6956f, 67.9834f, 63.86371f)),
             //(new(582.8622f, 584.3083f, -11.08832f), new(30.21015f, 44.67143f, 328.7579f)),
             //(new(-15.53556f, 672.9326f, -483.236f), new(320.0523f, 345.0906f, 7.339639f)),
@@ -26,7 +26,7 @@ namespace SolarRangers.Managers
         readonly static List<(Vector3, Vector3)> shieldedBeaconLocs = [
             (new(-164.1224f, 218.0329f, -781.5752f), new(348.2879f, 286.2274f, 76.60799f)),
             //(new(-119.0013f, -584.2071f, -577.3982f), new(46.15285f, 355.6879f, 171.7899f)),
-            (new(-81.47157f, -156.3072f, 805.6272f), new(320.8534f, 72.34212f, 105.7312f)),
+            //(new(-81.47157f, -156.3072f, 805.6272f), new(320.8534f, 72.34212f, 105.7312f)),
             (new(177.8307f, 707.4901f, 383.0002f), new(329.7046f, 236.3416f, 344.4792f)),
         ];
 
@@ -156,7 +156,7 @@ namespace SolarRangers.Managers
 
         IEnumerator DoStartOuterDefensesPhase()
         {
-            SolarRangers.CombatModeActive = true;
+            SolarRangers.InitiateCombatMode();
 
             Locator.GetShipLogManager().RevealFact("RANGER_EGGSTAR_DISCOVERY");
 
@@ -180,7 +180,7 @@ namespace SolarRangers.Managers
                 ObjectUtils.PlaceOnPlanet(GroundForcefieldController.Spawn(beacon), eggStar, pos, rot);
             }
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var angle = i / 6f * Mathf.PI * 2f;
                 var radius = 828f + 100f;

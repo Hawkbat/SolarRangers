@@ -53,6 +53,14 @@ namespace SolarRangers.Managers
 
         static void Explode(ICombatant attacker, float damage, Transform parent, Vector3 position, float size, AudioType sound)
         {
+            if (parent && parent.root == Locator.GetShipTransform())
+            {
+                if (PlayerState.AtFlightConsole())
+                {
+                    return;
+                }
+            }
+
             if (!Instance.explosionPool.TryDequeue(out var explosion))
             {
                 explosion = Instantiate(Instance.shipExplosionPrefab).GetComponent<ExplosionController>();

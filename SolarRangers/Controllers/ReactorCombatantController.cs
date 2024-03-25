@@ -98,7 +98,7 @@ namespace SolarRangers.Controllers
             var diff = planet.position - player.position;
             if (diff.magnitude > 300f) diff = diff.normalized * 300f;
             var rot = Quaternion.LookRotation(-diff.normalized, transform.up);
-            ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff, rot.eulerAngles);
+            //ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff, rot.eulerAngles);
             ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff + Vector3.up * 10f, rot.eulerAngles);
             ObjectUtils.PlaceOnPlanet(EggDroneCombatantController.Spawn(planet.gameObject), planet.gameObject, diff + Vector3.down * 10f, rot.eulerAngles);
         }

@@ -7,3 +7,5 @@ The Outer Wilds are under attack by the nefarious Eggmund Empire! Save the solar
 See if you can find the secret Ernesto ending!
 
 This mod is a jam entry for the [March 2024 Mod Jam](https://outerwildsmods.com/jam/mar-2024/).
+
+Special thanks to the following playtesters: Oshyu18, ShwinVT

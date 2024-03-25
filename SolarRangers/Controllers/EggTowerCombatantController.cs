@@ -15,7 +15,7 @@ namespace SolarRangers.Controllers
     {
         const float DETECTION_DISTANCE = 1500f;
         const float TURRET_ROTATE_SPEED = 30f;
-        const float MAX_HEALTH = 100f;
+        const float MAX_HEALTH = 50f;
 
         float health = MAX_HEALTH;
         bool hasDied = false;
@@ -147,11 +147,13 @@ namespace SolarRangers.Controllers
 
             var playerT = Locator.GetPlayerTransform();
             var turretT = turretObj.transform;
-            var inRange = Vector3.Distance(playerT.position, turretT.position) <= DETECTION_DISTANCE;
+            var diff = playerT.position - turretT.position;
+            var inRange = diff.magnitude <= DETECTION_DISTANCE;
+            var inCone = Vector3.Dot(transform.up, diff.normalized) > 0f;
             
-            if (inRange)
+            if (inRange && inCone)
             {
-                var lookRot = Quaternion.LookRotation(playerT.position - turretT.position, transform.up);
+                var lookRot = Quaternion.LookRotation(diff.normalized, transform.up);
                 turretT.rotation = Quaternion.RotateTowards(turretT.rotation, lookRot, Time.deltaTime * TURRET_ROTATE_SPEED);
 
                 /*var lookPlane = new Plane(transform.up, transform.position);
