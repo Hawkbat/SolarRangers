@@ -26,7 +26,7 @@ namespace SolarRangers.Controllers
         const float HEALTH_FACTOR = 200f;
         const float STUN_THRESHOLD = 100f;
         const float STUN_DURATION = 3f;
-        const float DEATH_EXPLOSION_LARGE_THRESHOLD = 0.75f;
+        const float DEATH_EXPLOSION_LARGE_THRESHOLD = 0.5f;
         const float DEATH_EXPLOSION_MEDIUM_THRESHOLD = 0.25f;
         const float EAT_PLAYER_SCALE_THRESHOLD = 0.5f;
 
@@ -37,7 +37,7 @@ namespace SolarRangers.Controllers
         AnglerfishController angler;
         AnglerfishAnimController anglerAnim;
         AnglerfishAudioController anglerAudio;
-        List<Transform> cybernetics = [];
+        readonly List<Transform> cybernetics = [];
 
         public override string GetNameKey() => isMecha ? "CombatantMechaAngler" : "CombatantAngler";
         public override bool CanTarget() => !IsDestroyed();
@@ -109,11 +109,11 @@ namespace SolarRangers.Controllers
             }
         }
 
-        public bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
-            if (IsDestroyed()) return false;
+            var damage = source.GetDamage();
             health = Mathf.Max(health - damage, 0f);
-            if (damage >= STUN_THRESHOLD)
+            if (damage >= STUN_THRESHOLD || source.GetDamageType() == InstantDamageType.Electrical)
             {
                 Stun(STUN_DURATION);
             }
@@ -142,11 +142,11 @@ namespace SolarRangers.Controllers
                         ObjectUtils.ConvertToPhysicsProp(t.gameObject, angler._anglerBody);
                     }
                 }
-                if (scale > DEATH_EXPLOSION_LARGE_THRESHOLD)
+                if (scale >= DEATH_EXPLOSION_LARGE_THRESHOLD)
                 {
                     ExplosionManager.LargeExplosion(this, 50f, transform, transform.position);
                 }
-                else if (scale > DEATH_EXPLOSION_MEDIUM_THRESHOLD)
+                else if (scale >= DEATH_EXPLOSION_MEDIUM_THRESHOLD)
                 {
                     ExplosionManager.MediumExplosion(this, 25f, transform, transform.position);
                 }

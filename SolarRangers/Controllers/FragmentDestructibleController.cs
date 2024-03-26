@@ -8,12 +8,13 @@ using UnityEngine;
 
 namespace SolarRangers.Controllers
 {
-    public class FragmentDestructibleController : AbstractDestructibleController
+    public class FragmentDestructibleController : MonoBehaviour, IDestructible
     {
         FragmentIntegrity fragmentIntegrity;
-        public override string GetNameKey() => "DestructibleFragment";
-        public override float GetHealth() => fragmentIntegrity._integrity;
-        public override float GetMaxHealth() => fragmentIntegrity._origIntegrity;
+        public string GetNameKey() => "DestructibleFragment";
+        public float GetHealth() => fragmentIntegrity._integrity;
+        public float GetMaxHealth() => fragmentIntegrity._origIntegrity;
+        public bool IsDestroyed() => fragmentIntegrity._integrity <= 0f;
 
         public static FragmentDestructibleController Merge(Component c)
         {
@@ -27,10 +28,10 @@ namespace SolarRangers.Controllers
 
         }
 
-        public override bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
             if (source is MeteorProjectileController) return false; // Meteor handles damage itself
-            if (fragmentIntegrity._integrity <= 0f) return false;
+            var damage = source.GetDamage();
             fragmentIntegrity.AddDamage(damage);
             return true;
         }

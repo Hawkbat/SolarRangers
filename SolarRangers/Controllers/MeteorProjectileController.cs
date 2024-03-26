@@ -55,7 +55,7 @@ namespace SolarRangers.Controllers
                 var targets = colliders.Select(c => c.GetComponentInParent<IDestructible>()).Distinct().Where(t => t != null);
                 foreach (var target in targets)
                 {
-                    DealDamage(target);
+                    CombatUtils.ResolveHit(this, target);
                 }
             }
         }
@@ -65,9 +65,10 @@ namespace SolarRangers.Controllers
             MeteorManager.Recycle(this);
         }
 
-        public bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
             if (!meteor.hasLaunched || meteor.hasImpacted) return false;
+            var damage = source.GetDamage();
             meteor._heat += damage / 100f;
             if (meteor._heat > 1f)
             {

@@ -1,24 +1,19 @@
-
 Short-term
 
-Shortcut the General's dialogue on subsequent loops
-Make it clearer the inner seeds aren't destructible targets
-Disable the nomai orbs so they aren't distracting
-Nerf impact damage from the drones crashing into you
-Shwin thought you had to hit the glowing part of the beacons to destroy them
+Write dialogue for the new NPCs
 
 Mid-term
 
+Disable the nomai orbs so they aren't distracting
 Figure out why evil chert material isn't working
 Modify turret materials
 Add more NPCs and decorations to Timber One
 Add medal ceremony cutscene
 Add game over cutscene to "trigger" supernova (just fire it off X seconds before base nova)
-Better feedback when hitting targets (reticle change? sound effect?)
-Markers to indicate the location of nearby enemies, especially off-screen
 
 Long-term
 
+Markers to indicate the location of nearby enemies, especially off-screen
 New scenario in the base game solar system
 Regenerating "shield" to prevent chip damage from breaking ship components
 Add ship wings as new hull/component pieces so they can be temporarily disabled individually

@@ -48,7 +48,7 @@ namespace SolarRangers.Managers
 
         public static void MassiveExplosion(ICombatant attacker, float damage, Transform parent, Vector3 position)
         {
-            Explode(attacker, damage, parent, position, 75f, AudioType.BH_MeteorImpact);
+            Explode(attacker, damage, parent, position, 75f, AudioType.EyeBigBang);
         }
 
         static void Explode(ICombatant attacker, float damage, Transform parent, Vector3 position, float size, AudioType sound)
@@ -111,12 +111,12 @@ namespace SolarRangers.Managers
 
                 if (damage > 0f)
                 {
-                    var damageSource = new TransientDamageSource(attacker, position);
+                    var damageSource = new TransientDamageSource(attacker, damage, position);
                     var colliders = Physics.OverlapSphere(position, size * 10f, OWLayerMask.physicalMask, QueryTriggerInteraction.Ignore);
                     var targets = colliders.Select(c => c.GetComponentInParent<IDestructible>()).Distinct().Where(t => t != null);
                     foreach (var target in targets)
                     {
-                        target.TakeDamage(damageSource, damage);
+                        CombatUtils.ResolveHit(damageSource, target);
                     }
                 }
             });

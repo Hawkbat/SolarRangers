@@ -14,6 +14,7 @@ namespace SolarRangers.Controllers
         protected float damage;
 
         public ICombatant GetAttacker() => attacker;
+        public float GetDamage() => damage;
         public Vector3 GetDamagePosition() => transform.position;
         public virtual InstantDamageType GetDamageType() => InstantDamageType.Impact;
         public HazardVolume.HazardType GetHazardType() => HazardVolume.HazardType.FIRE;
@@ -22,11 +23,6 @@ namespace SolarRangers.Controllers
         {
             this.attacker = attacker;
             this.damage = damage;
-        }
-
-        public bool DealDamage(IDestructible target)
-        {
-            return target.TakeDamage(this, damage);
         }
     }
 }

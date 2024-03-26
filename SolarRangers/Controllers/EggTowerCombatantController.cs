@@ -18,7 +18,6 @@ namespace SolarRangers.Controllers
         const float MAX_HEALTH = 50f;
 
         float health = MAX_HEALTH;
-        bool hasDied = false;
 
         MeteorTurretController turret;
         GameObject eggObj;
@@ -31,7 +30,7 @@ namespace SolarRangers.Controllers
         public override Vector3 GetReticlePosition() => eggObj.transform.position;
         public float GetHealth() => health;
         public float GetMaxHealth() => MAX_HEALTH;
-        public bool IsDestroyed() => hasDied;
+        public bool IsDestroyed() => health <= 0f;
 
         public static EggTowerCombatantController Spawn()
         {
@@ -45,13 +44,12 @@ namespace SolarRangers.Controllers
 
         }
 
-        public bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
-            if (hasDied) return false;
+            var damage = source.GetDamage();
             health = Mathf.Max(health - damage, 0f);
             if (health <= 0f)
             {
-                hasDied = true;
                 StartCoroutine(OnDie(source));
             }
             return true;
@@ -139,7 +137,7 @@ namespace SolarRangers.Controllers
 
         void Update()
         {
-            if (hasDied)
+            if (IsDestroyed())
             {
                 turret.SetFiringState(false);
                 return;
@@ -149,7 +147,7 @@ namespace SolarRangers.Controllers
             var turretT = turretObj.transform;
             var diff = playerT.position - turretT.position;
             var inRange = diff.magnitude <= DETECTION_DISTANCE;
-            var inCone = Vector3.Dot(transform.up, diff.normalized) > 0f;
+            var inCone = Vector3.Dot(transform.up, diff.normalized) > -0.2f;
             
             if (inRange && inCone)
             {

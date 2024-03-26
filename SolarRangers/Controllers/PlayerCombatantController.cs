@@ -18,6 +18,13 @@ namespace SolarRangers.Controllers
 
         ScreenPrompt fireLasersPrompt;
         LaserTurretController scopeTurret;
+        ReticleController reticle;
+        Color reticleBaseColor;
+        Color reticleHitColor = new Color(0f, 1f, 0f);
+        Color reticleMissColor = new Color(0.5f, 0.5f, 0.5f);
+        float reticleChangeDuration = 0.2f;
+        float lastHitTimer;
+        bool lastHitDidDamage;
 
         public override string GetNameKey() => "CombatantPlayer";
         public override bool CanTarget() => false;
@@ -36,7 +43,26 @@ namespace SolarRangers.Controllers
 
         public void Init()
         {
+            reticle = FindObjectOfType<ReticleController>();
+            reticleBaseColor = reticle._image.color;
+        }
 
+        public override void OnHitLanded(IDamageSource source, IDestructible target, bool didDamage)
+        {
+            if (didDamage)
+            {
+                Locator.GetPlayerAudioController().PlayOneShotInternal(AudioType.ImpactUnderwater);
+            }
+            else
+            {
+                Locator.GetPlayerAudioController().PlayOneShotInternal(AudioType.DialogueAdvance);
+            }
+
+            if (lastHitTimer <= 0f || !lastHitDidDamage)
+            {
+                lastHitTimer = reticleChangeDuration;
+                lastHitDidDamage = didDamage;
+            }
         }
 
         public void StartProbeReload(float reloadTime)
@@ -68,6 +94,16 @@ namespace SolarRangers.Controllers
 
         void LateUpdate()
         {
+            if (lastHitTimer > 0f)
+            {
+                reticle._image.color = lastHitDidDamage ? reticleHitColor : reticleMissColor;
+                lastHitTimer -= Time.deltaTime;
+                if (lastHitTimer <= 0f)
+                {
+                    reticle._image.color = reticleBaseColor;
+                }
+            }
+
             if (IsSignalscopeGun())
             {
                 var scope = Locator.GetToolModeSwapper().GetSignalScope();

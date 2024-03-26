@@ -62,9 +62,9 @@ namespace SolarRangers.Controllers
             initialized = true;
         }
 
-        public bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
-            if (health <= 0f) return false;
+            var damage = source.GetDamage();
             health = Mathf.Clamp(health - damage, 0f, GetMaxHealth());
             if (health <= 0f)
             {

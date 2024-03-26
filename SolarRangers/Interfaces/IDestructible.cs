@@ -6,6 +6,6 @@
         float GetHealth();
         float GetMaxHealth();
         bool IsDestroyed();
-        bool TakeDamage(IDamageSource source, float damage);
+        bool OnTakeDamage(IDamageSource source);
     }
 }

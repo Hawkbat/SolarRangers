@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 774310142
+CRC: 2101277777
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b94553eb2b61f4557551b4d305e30348
+    Hash: 2ec72733a2071b343b1edd66fb5fa0e0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 585bd3a14371897d33fdcd9e47e86c39
+    Hash: 35af001d1f265cc9132c907309a661be
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -39,6 +39,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: f913c288c393f80a7e923fc1c775f4fb, type: 3}
 - Class: 114
   Script: {fileID: -2144047439, guid: bc81085b06da409428715cdd6ba25ffe, type: 3}
+- Class: 114
+  Script: {fileID: 2014631916, guid: bc81085b06da409428715cdd6ba25ffe, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
@@ -51,24 +53,32 @@ Assets:
 - Assets/SolarRangers/Objects/EggEmpire/Angler_EyePiece.prefab
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_EyePiece.fbx
 - Assets/SolarRangers/Materials/Structure_EGG_Porcelain_mat.mat
+- Assets/SolarRangers/Objects/Rangers/Presentation/Presentation.prefab
 - Assets/SolarRangers/Materials/Props_EGG_SmallTractorBeam_Emissive_mat.mat
 - Assets/SolarRangers/Materials/Evil_EGG.mat
 - Assets/SolarRangers/Objects/EggEmpire/Drone.prefab
 - Assets/SolarRangers/Materials/Structure_EGG_Airlock_mat.mat
+- Assets/SolarRangers/Materials/SR_Patch.mat
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/ForcefieldCollision.fbx
 - Assets/SolarRangers/Objects/EggEmpire/Materials/Holo_Eye.mat
 - Assets/SolarRangers/Materials/Evil_EGG_d.png
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/SolarRanger_Patch.fbx
 - Assets/SolarRangers/Materials/Evil_EGG_s.png
+- Assets/SolarRangers/Objects/EggEmpire/Meshes/SolarRanger_Medal.fbx
 - Assets/SolarRangers/Materials/Structure_EGG_RedGlow_mat.mat
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_Engine.fbx
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_JawClamp.fbx
+- Assets/SolarRangers/Objects/Rangers/Medal/Medal.prefab
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_EyeLens.fbx
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Airlock_CapEmpty.fbx
 - Assets/SolarRangers/Materials/Effects_EGG_VolumetricLight.mat
 - Assets/SolarRangers/Materials/Effects_EGG_Forcefield_mat.mat
+- Assets/SolarRangers/Objects/Rangers/Presentation/Presentation.mat
 - Assets/SolarRangers/Materials/Evil_EGG_n.png
 - Assets/SolarRangers/Materials/Structure_EGG_StarTile_Glow_s.png
 - Assets/SolarRangers/Objects/EggEmpire/GroundForcefield.prefab
+- Assets/SolarRangers/Materials/SR_Patch.png
+- Assets/SolarRangers/Objects/Rangers/Presentation/Presentation.png
 - Assets/SolarRangers/Objects/EggEmpire/Airlock_Cap_Empty.prefab
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Airlock_Cap.fbx
 - Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_body02.prefab

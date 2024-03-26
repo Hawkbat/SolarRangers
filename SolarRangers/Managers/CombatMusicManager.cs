@@ -33,7 +33,7 @@ namespace SolarRangers.Managers
             if (!escapeMusicClip)
                 escapeMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Awakening.mp3");
             if (!victoryMusicClip)
-                victoryMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Legend.mp3");
+                victoryMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Ascend.mp3");
 
             var audioObj = new GameObject("AudioSource");
             audioObj.transform.SetParent(transform, false);
@@ -51,8 +51,6 @@ namespace SolarRangers.Managers
         // Steven McDonald: Spearhead (moderate combat music)
         // Steven McDonald: Ascend (victory music)
         // Steven McDonald: Legend (victory music)
-
-        // Matthew Pablo: Tactical Pursuit (moderate combat music)
 
         void Update()
         {

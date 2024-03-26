@@ -110,7 +110,7 @@
         "position": {
           "x": -2,
           "y": 2058,
-          "z": -53.05
+          "z": -52.8
         },
         "rotation": {
           "x": 270,
@@ -123,7 +123,7 @@
         "position": {
           "x": 3,
           "y": 2066,
-          "z": -53.05
+          "z": -52.8
         },
         "rotation": {
           "x": 345,
@@ -135,13 +135,95 @@
         "path": "DreamWorld_Body/Sector_DreamWorld/Sector_DreamZone_2/Ghosts_DreamZone_2/GhostNodeMap_HornetHouse/Prefab_IP_GhostBird_Hornet/Ghostbird_IP_ANIM",
         "position": {
           "x": 2,
-          "y": 2059,
-          "z": -53.05
+          "y": 2061,
+          "z": -52.8
         },
         "rotation": {
           "x": 345,
           "y": 270,
           "z": 270
+        }
+      },
+      {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Sector_UpperVillage/Characters_UpperVillage/Villager_HEA_Gossan",
+        "removeChildren": [ "ConversationZone" ],
+        "position": {
+          "x": -5,
+          "y": 2061,
+          "z": -52.8
+        },
+        "rotation": {
+          "x": 0,
+          "y": 90,
+          "z": 90
+        }
+      },
+      {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Sector_LowerVillage/Characters_LowerVillage/Kids_PreGame/Villager_HEA_Tephra",
+        "removeChildren": [ "ConversationZone" ],
+        "position": {
+          "x": -4.4,
+          "y": 2065,
+          "z": -51.7
+        },
+        "rotation": {
+          "x": 0,
+          "y": 90,
+          "z": 90
+        }
+      },
+      {
+        "path": "BrittleHollow_Body/Sector_BH/Sector_NorthHemisphere/Sector_NorthPole/Sector_HangingCity/Sector_HangingCity_BlackHoleForge/BlackHoleForgePivot/Props_BlackHoleForge/Props_NOM_Table",
+        "position": {
+          "x": -5,
+          "y": 2065,
+          "z": -52.8
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "path": "Assets/SolarRangers/Objects/Rangers/Presentation/Presentation.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "position": {
+          "x": 0,
+          "y": 2054.1,
+          "z": -50.5
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
+        },
+        "scale": 3
+      },
+      {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Interactables_Village/Interactables_StaticGeo/OtherComponentsGroup/Props_HEA_ProjectionScreen",
+        "position": {
+          "x": 0,
+          "y": 2054,
+          "z": -52.8
+        },
+        "rotation": {
+          "x": 270,
+          "y": 90,
+          "z": 90
+        }
+      },
+      {
+        "path": "TimberHearth_Body/Sector_TH/Sector_Village/Interactables_Village/Interactables_StaticGeo/OtherComponentsGroup/Props_HEA_Projector",
+        "position": {
+          "x": 0,
+          "y": 2058,
+          "z": -52.8
+        },
+        "rotation": {
+          "x": 90,
+          "y": 0,
+          "z": 0
         }
       },
       {
@@ -159,6 +241,7 @@
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "removeChildren": [ "AudioSource_GravityCrystal" ],
         "position": {
           "x": 0,
           "y": 2100,
@@ -173,6 +256,7 @@
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "removeChildren": [ "AudioSource_GravityCrystal" ],
         "position": {
           "x": 0,
           "y": 2090,
@@ -187,6 +271,7 @@
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "removeChildren": [ "AudioSource_GravityCrystal" ],
         "position": {
           "x": 0,
           "y": 2080,
@@ -201,6 +286,7 @@
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "removeChildren": [ "AudioSource_GravityCrystal" ],
         "position": {
           "x": 0,
           "y": 2070,
@@ -215,6 +301,7 @@
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
+        "removeChildren": [ "AudioSource_GravityCrystal" ],
         "position": {
           "x": 0,
           "y": 2060,
@@ -309,16 +396,16 @@
         "path": "TimberHearth_Body/Sector_TH/Sector_Village/Sector_Observatory/Interactables_Observatory/AnglerFishExhibit/AnglerFishTankPivot/Beast_Anglerfish",
         "rename": "Ernesto",
         "position": {
-          "x": 27.9075,
-          "y": 1987.99,
-          "z": 171.8913
+          "x": -30.47283,
+          "y": 2100,
+          "z": -17.58286
         },
         "rotation": {
-          "x": 87.2984,
-          "y": 99.1401,
-          "z": 90.00011
+          "x": 0,
+          "y": 240,
+          "z": 0
         },
-        "scale": 0.05
+        "scale": 0.03
       },
       {
         "path": "BrittleHollow_Body/Sector_BH/Sector Quantum Pole Path/Fragment QuantumPolePath 2/Interactables_QPP2/Prefab_NOM_GravityCrystal",
@@ -386,35 +473,69 @@
         "path": "Assets/SolarRangers/Objects/EggEmpire/Angler_Implant_jaw.prefab",
         "assetBundle": "assetbundles/solarrangers",
         "keepLoaded": true
+      },
+      {
+        "rename": "PREFAB_Medal",
+        "path": "Assets/SolarRangers/Objects/Rangers/Medal.prefab",
+        "assetBundle": "assetbundles/solarrangers",
+        "keepLoaded": true
       }
     ],
     "dialogue": [
       {
         "position": {
-          "x": -2,
-          "y": 2058,
-          "z": -52
+          "x": 0,
+          "y": 1,
+          "z": 0
         },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Villager_HEA_Mica",
         "pathToAnimController": "Sector/Villager_HEA_Mica",
         "xmlFile": "planets/dialogue/GENERAL.xml"
       },
       {
         "position": {
-          "x": 3,
-          "y": 2066,
-          "z": -51
+          "x": 0,
+          "y": 1.5,
+          "z": 0
         },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Nomai_ANIM_SkyWatching_Idle",
         "pathToAnimController": "Sector/Nomai_ANIM_SkyWatching_Idle",
         "xmlFile": "planets/dialogue/NOMAI.xml"
       },
       {
         "position": {
-          "x": 2,
-          "y": 2059,
-          "z": -50
+          "x": 0,
+          "y": 2.5,
+          "z": 0
         },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Ghostbird_IP_ANIM",
         "pathToAnimController": "Sector/Ghostbird_IP_ANIM",
         "xmlFile": "planets/dialogue/OWLK.xml"
+      },
+      {
+        "position": {
+          "x": 0,
+          "y": 1.5,
+          "z": 0
+        },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Villager_HEA_Gossan",
+        "pathToAnimController": "Sector/Villager_HEA_Gossan",
+        "xmlFile": "planets/dialogue/EXPILOT.xml"
+      },
+      {
+        "position": {
+          "x": 0,
+          "y": 0.5,
+          "z": 0
+        },
+        "isRelativeToParent": true,
+        "parentPath": "Sector/Villager_HEA_Tephra",
+        "pathToAnimController": "Sector/Villager_HEA_Tephra",
+        "xmlFile": "planets/dialogue/KID.xml"
       },
       {
         "position": {
@@ -424,9 +545,8 @@
         },
         "isRelativeToParent": true,
         "parentPath": "Sector/Ernesto",
-        "radius": 8,
-        "range": 8,
-        "lookAtRadius": 32,
+        "radius": 4,
+        "range": 4,
         "pathToAnimController": "Sector/Ernesto",
         "xmlFile": "planets/dialogue/ERNESTO.xml"
       }

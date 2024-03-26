@@ -33,7 +33,7 @@
 		<Dialogue>
 			<Page>RANGER_GENERAL_INTRO_3_1</Page>
 		</Dialogue>
-		<SetCondition>RANGER_SPOKE_TO_TROUT</SetCondition>
+		<SetPersistentCondition>RANGER_SPOKE_TO_GENERAL</SetPersistentCondition>
 		<DialogueTarget>MAIN</DialogueTarget>
 	</DialogueNode>
 
@@ -120,7 +120,7 @@
 
 	<DialogueNode>
 		<Name>ENTRY</Name>
-		<EntryCondition>RANGER_SPOKE_TO_TROUT</EntryCondition>
+		<EntryCondition>RANGER_SPOKE_TO_GENERAL</EntryCondition>
 		<Dialogue>
 			<Page>RANGER_GENERAL_ENTRY_1</Page>
 		</Dialogue>

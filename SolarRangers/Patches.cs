@@ -38,6 +38,16 @@ namespace SolarRangers
             return true;
         }
 
+        [HarmonyPostfix, HarmonyPatch(typeof(ShipHull), nameof(ShipHull.ApplyImpact))]
+        public static void ShipHull_ApplyImpact(ShipHull __instance)
+        {
+            if (!SolarRangers.CombatModeActive) return;
+            if (__instance._dominantImpact != null)
+            {
+                __instance._dominantImpact = new ImpactData(__instance._dominantImpact, 0.1f);
+            }
+        }
+
         [HarmonyPrefix, HarmonyPatch(typeof(ProbeLauncher), nameof(ProbeLauncher.TakeSnapshotWithCamera))]
         public static bool ProbeLauncher_TakeSnapshotWithCamera(ProbeCamera camera)
         {

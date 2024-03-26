@@ -25,5 +25,10 @@ namespace SolarRangers.Controllers
         {
             CombatantManager.Untrack(this);
         }
+
+        public virtual void OnHitLanded(IDamageSource source, IDestructible target, bool didDamage)
+        {
+
+        }
     }
 }

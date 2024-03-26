@@ -14,7 +14,6 @@ namespace SolarRangers.Controllers
     {
         const float MAX_HEALTH = 1000f;
 
-        float health = MAX_HEALTH;
         ReactorCombatantController reactor;
         GameObject coreSphere;
         Material coreMaterial;
@@ -25,13 +24,15 @@ namespace SolarRangers.Controllers
 
         public void Init(ReactorCombatantController reactor)
         {
+            Init(MAX_HEALTH);
             this.reactor = reactor;
         }
 
-        public override bool TakeDamage(IDamageSource source, float damage)
+        public override bool OnTakeDamage(IDamageSource source)
         {
             if (!reactor.IsCoreExposed()) return false;
             if (IsDestroyed()) return false;
+            var damage = source.GetDamage();
             health = Mathf.Max(health - damage, 0f);
             if (health <= 0f)
             {

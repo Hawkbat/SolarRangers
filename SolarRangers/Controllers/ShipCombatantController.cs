@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SolarRangers.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace SolarRangers.Controllers
         public override bool IsPlayer() => true;
 
         public bool IsInAttackMode =>
-            SolarRangers.CombatModeActive && wingsOpen && Locator.GetToolModeSwapper().IsInToolMode(ToolMode.Probe, ToolGroup.Ship);
+            SolarRangers.CombatModeActive && wingsOpen && PlayerState.AtFlightConsole();
 
         public static ShipCombatantController Merge(Component c)
         {
@@ -41,6 +42,14 @@ namespace SolarRangers.Controllers
         public void Init()
         {
 
+        }
+
+        public override void OnHitLanded(IDamageSource source, IDestructible target, bool didDamage)
+        {
+            if (SolarRangers.PlayerCombatant)
+            {
+                SolarRangers.PlayerCombatant.OnHitLanded(source, target, didDamage);
+            }
         }
 
         void Awake()

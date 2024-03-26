@@ -9,5 +9,6 @@ namespace SolarRangers.Interfaces
         bool IsPlayer();
         bool CanTarget();
         Vector3 GetReticlePosition();
+        void OnHitLanded(IDamageSource source, IDestructible target, bool didDamage);
     }
 }

@@ -54,6 +54,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="assets\sfx\" />
     <Folder Include="planets\shiplogs\sprites\" />
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@ namespace SolarRangers.Managers
         List<BeaconDestructibleController> beacons;
         ReactorCombatantController reactor;
         OWCamera cutsceneCam;
+        AudioClip applauseClip;
         float escapeTimer;
         State state;
 
@@ -52,6 +53,8 @@ namespace SolarRangers.Managers
 
         void Awake()
         {
+            applauseClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/sfx/applause.mp3");
+
             eggStar = SolarRangers.NewHorizons.GetPlanet("Egg Star");
             entryDimension = SolarRangers.NewHorizons.GetPlanet("RangerEntryOuter");
             reactorDimension = SolarRangers.NewHorizons.GetPlanet("RangerReactorOuter");
@@ -151,6 +154,11 @@ namespace SolarRangers.Managers
                 state = State.Epilogue;
                 var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Ernesto");
                 creditsVolume.position = Locator.GetPlayerTransform().position;
+            }
+            if (SolarRangers.DEBUG && Keyboard.current.numpad6Key.wasPressedThisFrame)
+            {
+                state = State.Epilogue;
+                StartCoroutine(DoEpilogue());
             }
         }
 
@@ -338,29 +346,70 @@ namespace SolarRangers.Managers
             }
         }
 
-        IEnumerator DoCutscene(Func<IEnumerator> action, Transform target, Vector3 targetPos, Quaternion targetRot)
+        IEnumerator DoEpilogue()
+        {
+            var applauseSource = ObjectUtils.Create2DAudioSource(OWAudioMixer.TrackName.Music, applauseClip);
+            
+            Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
+            if (PlayerState.AtFlightConsole())
+            {
+                FindObjectOfType<ShipCockpitController>().ExitFlightConsole();
+                yield return null;
+            }
+            
+            var pos = eggStar.transform.TransformPoint(-1f, 2060f, -51f);
+            var rot = eggStar.transform.rotation * Quaternion.Euler(270f, 90f, 90f);
+            Locator.GetPlayerBody().WarpToPositionRotation(pos, rot);
+            yield return null;
+            
+            Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
+            
+            applauseSource.Play();
+            Locator.GetPlayerSuit().RemoveSuit(true);
+
+            var medalParent = Locator.GetPlayerTransform().Find("Traveller_HEA_Player_v2/Traveller_Rig_v01:Traveller_Trajectory_Jnt/Traveller_Rig_v01:Traveller_ROOT_Jnt/Traveller_Rig_v01:Traveller_Spine_01_Jnt/Traveller_Rig_v01:Traveller_Spine_02_Jnt/Torso");
+            var medal = ObjectUtils.SpawnPrefab("Medal", medalParent);
+            medal.localPosition = new Vector3();
+            medal.localEulerAngles = new Vector3();
+
+            var targetPos = new Vector3(-1f, 2070f, -51f);
+            var targetRot = Quaternion.Euler(90f, 0f, 0f);
+            cutsceneCam.transform.position = Locator.GetPlayerCamera().transform.position + eggStar.transform.forward;
+            cutsceneCam.transform.rotation = Quaternion.LookRotation(-eggStar.transform.up, eggStar.transform.forward);
+            yield return DoCutscene(CutsceneBody, eggStar.transform, targetPos, targetRot, 15f, false);
+
+            IEnumerator CutsceneBody()
+            {
+                yield return new WaitForSeconds(1f);
+            }
+        }
+
+        IEnumerator DoCutscene(Func<IEnumerator> action, Transform target, Vector3 targetPos, Quaternion targetRot, float duration = 1f, bool placeAtPlayer = true)
         {
             var previousMode = OWInput.GetInputMode();
             OWInput.ChangeInputMode(InputMode.None);
             Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
             SolarRangers.CommonCameraUtility.EnterCamera(cutsceneCam);
-            cutsceneCam.transform.position = Locator.GetPlayerCamera().transform.position;
-            cutsceneCam.transform.rotation = Locator.GetPlayerCamera().transform.rotation;
-            yield return DoCutsceneCameraLerp(target, targetPos, targetRot);
+            if (placeAtPlayer)
+            {
+                cutsceneCam.transform.position = Locator.GetPlayerCamera().transform.position;
+                cutsceneCam.transform.rotation = Locator.GetPlayerCamera().transform.rotation;
+            }
+            yield return DoCutsceneCameraLerp(target, targetPos, targetRot, duration);
             var syncRoutine = StartCoroutine(DoSyncCutsceneCamera(target, targetPos, targetRot));
             yield return action();
             StopCoroutine(syncRoutine);
-            yield return DoCutsceneCameraLerp(Locator.GetPlayerCamera().transform, Vector3.zero, Quaternion.identity);
+            yield return DoCutsceneCameraLerp(Locator.GetPlayerCamera().transform, Vector3.zero, Quaternion.identity, duration);
             SolarRangers.CommonCameraUtility.ExitCamera(cutsceneCam);
             OWInput.ChangeInputMode(previousMode);
             Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
         }
 
-        IEnumerator DoCutsceneCameraLerp(Transform target, Vector3 targetPos, Quaternion targetRot)
+        IEnumerator DoCutsceneCameraLerp(Transform target, Vector3 targetPos, Quaternion targetRot, float duration)
         {
             var startPos = cutsceneCam.transform.position;
             var startRot = cutsceneCam.transform.rotation;
-            yield return AsyncUtils.DoUpdateTimer(1f, t =>
+            yield return AsyncUtils.DoUpdateTimer(duration, t =>
             {
                 var pos = target.TransformPoint(targetPos);
                 var rot = target.rotation * targetRot;

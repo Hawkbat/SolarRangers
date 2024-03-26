@@ -8,15 +8,16 @@ using UnityEngine;
 
 namespace SolarRangers.Controllers
 {
-    public class ShipHullDestructibleController : AbstractDestructibleController
+    public class ShipHullDestructibleController : MonoBehaviour, IDestructible
     {
         const float MAX_HEALTH = 300f;
 
         ShipHull hull;
 
-        public override string GetNameKey() => UITextLibrary.GetString(hull.hullName);
-        public override float GetHealth() => hull._integrity * MAX_HEALTH;
-        public override float GetMaxHealth() => MAX_HEALTH;
+        public string GetNameKey() => UITextLibrary.GetString(hull.hullName);
+        public float GetHealth() => hull._integrity * MAX_HEALTH;
+        public float GetMaxHealth() => MAX_HEALTH;
+        public bool IsDestroyed() => hull._integrity <= 0f;
 
         public static ShipHullDestructibleController Merge(Component c)
         {
@@ -30,8 +31,9 @@ namespace SolarRangers.Controllers
 
         }
 
-        public override bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
+            var damage = source.GetDamage();
             hull._integrity = Mathf.Max(hull._integrity - damage / MAX_HEALTH, 0f);
             
             var shipDamageController = Locator.GetShipBody().GetComponent<ShipDamageController>();

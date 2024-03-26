@@ -12,12 +12,7 @@ namespace SolarRangers.Controllers
     public class BeaconDestructibleController : AbstractDestructibleController
     {
         const float MAX_HEALTH = 100f;
-
-        float health = MAX_HEALTH;
         GameObject beaconObj;
-
-        public override float GetHealth() => health;
-        public override float GetMaxHealth() => MAX_HEALTH;
 
         public override string GetNameKey() => "DestructibleBeacon";
 
@@ -30,14 +25,14 @@ namespace SolarRangers.Controllers
 
         public void Init()
         {
-            health = MAX_HEALTH;
+            Init(MAX_HEALTH);
 
             beaconObj = ObjectUtils.SpawnPrefab("Beacon", transform).gameObject;
         }
 
-        public override bool TakeDamage(IDamageSource source, float damage)
+        public override bool OnTakeDamage(IDamageSource source)
         {
-            if (health <= 0f) return false;
+            var damage = source.GetDamage();
             health = Mathf.Clamp(health - damage, 0f, GetMaxHealth());
             if (health <= 0f)
             {

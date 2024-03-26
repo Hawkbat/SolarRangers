@@ -1,0 +1,21 @@
+﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
+	<NameField>RANGER_EXPILOT</NameField>
+
+	<DialogueNode>
+		<Name>ENTRY</Name>
+		<EntryCondition>DEFAULT</EntryCondition>
+		<Dialogue>
+			<Page>RANGER_EXPILOT_ENTRY_1</Page>
+			<Page>RANGER_EXPILOT_ENTRY_2</Page>
+		</Dialogue>
+	</DialogueNode>
+
+	<DialogueNode>
+		<Name>VICTORY</Name>
+		<EntryCondition>RANGER_VICTORY</EntryCondition>
+		<Dialogue>
+			<Page>RANGER_EXPILOT_VICTORY_1</Page>
+		</Dialogue>
+	</DialogueNode>
+
+</DialogueTree>

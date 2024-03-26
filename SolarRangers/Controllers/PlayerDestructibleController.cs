@@ -8,14 +8,14 @@ using UnityEngine;
 
 namespace SolarRangers.Controllers
 {
-    public class PlayerDestructibleController : AbstractDestructibleController
+    public class PlayerDestructibleController : MonoBehaviour, IDestructible
     {
         PlayerResources playerResources;
 
-        public override string GetNameKey() => "CombatantPlayer";
-        public override float GetHealth() => playerResources.GetHealth();
-        public override float GetMaxHealth() => PlayerResources._maxHealth;
-        public override bool IsDestroyed()
+        public string GetNameKey() => "CombatantPlayer";
+        public float GetHealth() => playerResources.GetHealth();
+        public float GetMaxHealth() => PlayerResources._maxHealth;
+        public bool IsDestroyed()
             => Locator.GetDeathManager().IsPlayerDying() || Locator.GetDeathManager().IsPlayerDead();
 
         public static PlayerDestructibleController Merge(Component c)
@@ -30,9 +30,9 @@ namespace SolarRangers.Controllers
 
         }
 
-        public override bool TakeDamage(IDamageSource source, float damage)
+        public bool OnTakeDamage(IDamageSource source)
         {
-            return playerResources.ApplyInstantDamage(damage, source.GetDamageType());
+            return playerResources.ApplyInstantDamage(source.GetDamage(), source.GetDamageType());
         }
 
         void Awake()

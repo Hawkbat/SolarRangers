@@ -10,10 +10,19 @@ namespace SolarRangers.Controllers
 {
     public abstract class AbstractDestructibleController : MonoBehaviour, IDestructible
     {
+        protected float health;
+        protected float maxHealth;
+
         public abstract string GetNameKey();
-        public abstract float GetHealth();
-        public abstract float GetMaxHealth();
+        public virtual float GetHealth() => health;
+        public virtual float GetMaxHealth() => maxHealth;
         public virtual bool IsDestroyed() => GetHealth() <= 0f;
-        public abstract bool TakeDamage(IDamageSource source, float damage);
+        public abstract bool OnTakeDamage(IDamageSource source);
+
+        public void Init(float maxHealth)
+        {
+            this.maxHealth = maxHealth;
+            health = maxHealth;
+        }
     }
 }

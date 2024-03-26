@@ -19,5 +19,9 @@ namespace SolarRangers.Objects
         public bool IsPlayer() => isPlayer;
         public bool CanTarget() => canTarget;
         public Vector3 GetReticlePosition() => position;
+        public void OnHitLanded(IDamageSource source, IDestructible target, bool didDamage)
+        {
+
+        }
     }
 }

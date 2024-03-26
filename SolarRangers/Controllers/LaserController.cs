@@ -100,8 +100,6 @@ namespace SolarRangers.Controllers
             audioSrc.dopplerLevel = 0f;
             audioSrc.pitch = 2.5f;
 
-            //GenericNoiseMaker.Merge(this, true, 150f);
-
             setUp = true;
         }
 
@@ -130,7 +128,7 @@ namespace SolarRangers.Controllers
                     var closestHit = hits.Take(hitCount).OrderBy(h => h.distance).First();
 
                     var target = closestHit.collider.GetComponentInParent<IDestructible>();
-                    if (target != null && DealDamage(target))
+                    if (CombatUtils.ResolveHit(this, target))
                     {
                         ExplosionManager.SmallExplosion(null, 0f, closestHit.transform, closestHit.point);
                     }
