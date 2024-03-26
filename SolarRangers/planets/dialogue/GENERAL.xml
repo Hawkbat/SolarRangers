@@ -1,15 +1,15 @@
 ﻿<DialogueTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Outer-Wilds-New-Horizons/new-horizons/main/NewHorizons/Schemas/dialogue_schema.xsd">
-	<NameField>GENERAL</NameField>
+	<NameField>RANGER_GENERAL</NameField>
 
 	<DialogueNode>
 		<Name>INTRO_1</Name>
 		<EntryCondition>DEFAULT</EntryCondition>
 		<Dialogue>
-			<Page>GENERAL_INTRO_1_1</Page>
+			<Page>RANGER_GENERAL_INTRO_1_1</Page>
 		</Dialogue>
 		<DialogueOptionsList>
 			<DialogueOption>
-				<Text>GENERAL_INTRO_1_CHOICE_1</Text>
+				<Text>RANGER_GENERAL_INTRO_1_CHOICE_1</Text>
 				<DialogueTarget>INTRO_2</DialogueTarget>
 			</DialogueOption>
 		</DialogueOptionsList>
@@ -18,11 +18,11 @@
 	<DialogueNode>
 		<Name>INTRO_2</Name>
 		<Dialogue>
-			<Page>GENERAL_INTRO_2_1</Page>
+			<Page>RANGER_GENERAL_INTRO_2_1</Page>
 		</Dialogue>
 		<DialogueOptionsList>
 			<DialogueOption>
-				<Text>GENERAL_INTRO_2_CHOICE_1</Text>
+				<Text>RANGER_GENERAL_INTRO_2_CHOICE_1</Text>
 				<DialogueTarget>INTRO_3</DialogueTarget>
 			</DialogueOption>
 		</DialogueOptionsList>		
@@ -31,7 +31,7 @@
 	<DialogueNode>
 		<Name>INTRO_3</Name>
 		<Dialogue>
-			<Page>GENERAL_INTRO_3_1</Page>
+			<Page>RANGER_GENERAL_INTRO_3_1</Page>
 		</Dialogue>
 		<SetCondition>RANGER_SPOKE_TO_TROUT</SetCondition>
 		<DialogueTarget>MAIN</DialogueTarget>
@@ -40,29 +40,29 @@
 	<DialogueNode>
 		<Name>MAIN</Name>
 		<Dialogue>
-			<Page>GENERAL_MAIN_1</Page>
+			<Page>RANGER_GENERAL_MAIN_1</Page>
 		</Dialogue>
 		<DialogueOptionsList>
 			<DialogueOption>
-				<Text>GENERAL_MAIN_CHOICE_1</Text>
+				<Text>RANGER_GENERAL_MAIN_CHOICE_1</Text>
 				<DialogueTarget>RANGERS</DialogueTarget>
 			</DialogueOption>
 			<DialogueOption>
-				<Text>GENERAL_MAIN_CHOICE_2</Text>
+				<Text>RANGER_GENERAL_MAIN_CHOICE_2</Text>
 				<DialogueTarget>INVADERS</DialogueTarget>
 			</DialogueOption>
 			<DialogueOption>
-				<Text>GENERAL_MAIN_CHOICE_3</Text>
+				<Text>RANGER_GENERAL_MAIN_CHOICE_3</Text>
 				<DialogueTarget>ORDERS</DialogueTarget>
 			</DialogueOption>
 			<DialogueOption>
 				<CancelledCondition>RANGER_INVASION</CancelledCondition>
-				<Text>GENERAL_MAIN_CHOICE_4</Text>
+				<Text>RANGER_GENERAL_MAIN_CHOICE_4</Text>
 				<DialogueTarget>INVASION</DialogueTarget>
 			</DialogueOption>
 			<DialogueOption>
 				<RequiredCondition>RANGER_INVASION</RequiredCondition>
-				<Text>GENERAL_MAIN_CHOICE_5</Text>
+				<Text>RANGER_GENERAL_MAIN_CHOICE_5</Text>
 				<DialogueTarget>EXIT</DialogueTarget>
 			</DialogueOption>
 		</DialogueOptionsList>
@@ -71,9 +71,9 @@
 	<DialogueNode>
 		<Name>RANGERS</Name>
 		<Dialogue>
-			<Page>GENERAL_RANGERS_1</Page>
-			<Page>GENERAL_RANGERS_2</Page>
-			<Page>GENERAL_RANGERS_3</Page>
+			<Page>RANGER_GENERAL_RANGERS_1</Page>
+			<Page>RANGER_GENERAL_RANGERS_2</Page>
+			<Page>RANGER_GENERAL_RANGERS_3</Page>
 		</Dialogue>
 		<DialogueTarget>MAIN</DialogueTarget>
 	</DialogueNode>
@@ -81,10 +81,10 @@
 	<DialogueNode>
 		<Name>INVADERS</Name>
 		<Dialogue>
-			<Page>GENERAL_INVADERS_1</Page>
-			<Page>GENERAL_INVADERS_2</Page>
-			<Page>GENERAL_INVADERS_3</Page>
-			<Page>GENERAL_INVADERS_4</Page>
+			<Page>RANGER_GENERAL_INVADERS_1</Page>
+			<Page>RANGER_GENERAL_INVADERS_2</Page>
+			<Page>RANGER_GENERAL_INVADERS_3</Page>
+			<Page>RANGER_GENERAL_INVADERS_4</Page>
 		</Dialogue>
 		<DialogueTarget>MAIN</DialogueTarget>
 	</DialogueNode>
@@ -92,11 +92,11 @@
 	<DialogueNode>
 		<Name>ORDERS</Name>
 		<Dialogue>
-			<Page>GENERAL_ORDERS_1</Page>
-			<Page>GENERAL_ORDERS_2</Page>
-			<Page>GENERAL_ORDERS_3</Page>
-			<Page>GENERAL_ORDERS_4</Page>
-			<Page>GENERAL_ORDERS_5</Page>
+			<Page>RANGER_GENERAL_ORDERS_1</Page>
+			<Page>RANGER_GENERAL_ORDERS_2</Page>
+			<Page>RANGER_GENERAL_ORDERS_3</Page>
+			<Page>RANGER_GENERAL_ORDERS_4</Page>
+			<Page>RANGER_GENERAL_ORDERS_5</Page>
 		</Dialogue>
 		<DialogueTarget>MAIN</DialogueTarget>
 	</DialogueNode>
@@ -104,9 +104,9 @@
 	<DialogueNode>
 		<Name>INVASION</Name>
 		<Dialogue>
-			<Page>GENERAL_INVASION_1</Page>
-			<Page>GENERAL_INVASION_2</Page>
-			<Page>GENERAL_INVASION_3</Page>
+			<Page>RANGER_GENERAL_INVASION_1</Page>
+			<Page>RANGER_GENERAL_INVASION_2</Page>
+			<Page>RANGER_GENERAL_INVASION_3</Page>
 		</Dialogue>
 		<SetCondition>RANGER_INVASION</SetCondition>
 	</DialogueNode>
@@ -114,7 +114,7 @@
 	<DialogueNode>
 		<Name>EXIT</Name>
 		<Dialogue>
-			<Page>GENERAL_EXIT_1</Page>
+			<Page>RANGER_GENERAL_EXIT_1</Page>
 		</Dialogue>
 	</DialogueNode>
 
@@ -122,7 +122,7 @@
 		<Name>ENTRY</Name>
 		<EntryCondition>RANGER_SPOKE_TO_TROUT</EntryCondition>
 		<Dialogue>
-			<Page>GENERAL_ENTRY_1</Page>
+			<Page>RANGER_GENERAL_ENTRY_1</Page>
 		</Dialogue>
 		<DialogueTarget>MAIN</DialogueTarget>
 	</DialogueNode>
@@ -131,14 +131,14 @@
 		<Name>VICTORY</Name>
 		<EntryCondition>RANGER_VICTORY</EntryCondition>
 		<Dialogue>
-			<Page>GENERAL_VICTORY_1</Page>
-			<Page>GENERAL_VICTORY_2</Page>
-			<Page>GENERAL_VICTORY_3</Page>
-			<Page>GENERAL_VICTORY_4</Page>
+			<Page>RANGER_GENERAL_VICTORY_1</Page>
+			<Page>RANGER_GENERAL_VICTORY_2</Page>
+			<Page>RANGER_GENERAL_VICTORY_3</Page>
+			<Page>RANGER_GENERAL_VICTORY_4</Page>
 		</Dialogue>
 		<DialogueOptionsList>
 			<DialogueOption>
-				<Text>GENERAL_VICTORY_CHOICE_1</Text>
+				<Text>RANGER_GENERAL_VICTORY_CHOICE_1</Text>
 				<ConditionToSet>RANGER_VICTORY_ENDING</ConditionToSet>
 			</DialogueOption>
 		</DialogueOptionsList>

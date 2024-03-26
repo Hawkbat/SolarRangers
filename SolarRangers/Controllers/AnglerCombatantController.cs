@@ -23,7 +23,7 @@ namespace SolarRangers.Controllers
         const float INITIAL_PURSUE_DISTANCE = 300f;
         static Vector3 INITIAL_MOUTH_OFFSET = new(0f, 2f, 60f);
 
-        const float HEALTH_FACTOR = 300f;
+        const float HEALTH_FACTOR = 200f;
         const float STUN_THRESHOLD = 100f;
         const float STUN_DURATION = 3f;
         const float DEATH_EXPLOSION_LARGE_THRESHOLD = 0.75f;

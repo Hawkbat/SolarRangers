@@ -25,7 +25,7 @@ namespace SolarRangers
         public static ShipCombatantController ShipCombatant;
         public static TransientCombatant WorldCombatant;
 
-        public static bool CombatModeActive = false;
+        public static bool CombatModeActive { get; private set; }
 
         void Start()
         {
@@ -59,21 +59,26 @@ namespace SolarRangers
                     JamScenarioManager.Spawn();
 
                     WorldCombatant ??= new TransientCombatant("CombatantWorld");
-
-                    PlayerCombatant = PlayerCombatantController.Merge(Locator.GetPlayerTransform());
-                    PlayerDestructible = PlayerDestructibleController.Merge(Locator.GetPlayerTransform());
-                    ShipCombatant = ShipCombatantController.Merge(Locator.GetShipTransform());
-
-                    foreach (var hull in Locator.GetShipTransform().GetComponentsInChildren<ShipHull>())
-                        ShipHullDestructibleController.Merge(hull);
-
-                    foreach (var fragment in FindObjectsOfType<FragmentIntegrity>())
-                        FragmentDestructibleController.Merge(fragment);
-
-                    foreach (var angler in Resources.FindObjectsOfTypeAll<AnglerfishController>())
-                        AnglerCombatantController.Merge(angler);
                 });
             };
+        }
+
+        public static void InitiateCombatMode()
+        {
+            CombatModeActive = true;
+
+            PlayerCombatant = PlayerCombatantController.Merge(Locator.GetPlayerTransform());
+            PlayerDestructible = PlayerDestructibleController.Merge(Locator.GetPlayerTransform());
+            ShipCombatant = ShipCombatantController.Merge(Locator.GetShipTransform());
+
+            foreach (var hull in Locator.GetShipTransform().GetComponentsInChildren<ShipHull>())
+                ShipHullDestructibleController.Merge(hull);
+
+            foreach (var fragment in FindObjectsOfType<FragmentIntegrity>())
+                FragmentDestructibleController.Merge(fragment);
+
+            foreach (var angler in Resources.FindObjectsOfTypeAll<AnglerfishController>())
+                AnglerCombatantController.Merge(angler);
         }
 
         public static void Log(string msg, MessageType type = MessageType.Info)

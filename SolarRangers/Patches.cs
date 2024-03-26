@@ -45,18 +45,19 @@ namespace SolarRangers
             var probe = camera.GetComponentInParent<SurveyorProbe>();
             var sector = probe._sectorDetector ? probe._sectorDetector.GetLastEnteredSector() : null;
 
-            if (PlayerState.AtFlightConsole())
+            if (PlayerState.AtFlightConsole() && SolarRangers.ShipCombatant)
             {
-                ExplosionManager.MediumExplosion(SolarRangers.ShipCombatant, 200f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+                ExplosionManager.MediumExplosion(SolarRangers.ShipCombatant, 300f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
             }
-            else
+            else if (SolarRangers.PlayerCombatant)
             {
-                ExplosionManager.SmallExplosion(SolarRangers.PlayerCombatant, 50f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
+                ExplosionManager.SmallExplosion(SolarRangers.PlayerCombatant, 100f, sector ? sector.transform : probe.transform.parent, probe.transform.position);
             }
 
             probe.Retrieve(0f);
 
-            SolarRangers.PlayerCombatant.StartProbeReload(5f);
+            if (SolarRangers.PlayerCombatant)
+                SolarRangers.PlayerCombatant.StartProbeReload(3f);
 
             return false;
         }
