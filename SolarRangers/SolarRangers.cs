@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Autodesk.Fbx;
+using HarmonyLib;
 using OWML.Common;
 using OWML.ModHelper;
 using SolarRangers.Controllers;
@@ -13,7 +14,7 @@ namespace SolarRangers
     public class SolarRangers : ModBehaviour
     {
         public const bool MUSIC_ENABLED = true;
-        public const bool DEBUG = true;
+        public const bool DEBUG = false;
 
         public static SolarRangers Instance;
 
@@ -24,6 +25,7 @@ namespace SolarRangers
         public static PlayerDestructibleController PlayerDestructible;
         public static ShipCombatantController ShipCombatant;
         public static TransientCombatant WorldCombatant;
+        public static OWAudioSource PersistentAudioSource;
 
         public static bool CombatModeActive { get; private set; }
 
@@ -44,6 +46,11 @@ namespace SolarRangers
 
             LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
             {
+                if (loadScene == OWScene.TitleScreen && PersistentAudioSource)
+                {
+                    PersistentAudioSource.FadeOut(0.5f);
+                    ModHelper.Events.Unity.RunWhen(() => !PersistentAudioSource.isPlaying, () => Destroy(PersistentAudioSource.gameObject));
+                }
                 if (loadScene != OWScene.SolarSystem) return;
 
                 CombatModeActive = false;

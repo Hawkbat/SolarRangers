@@ -204,17 +204,31 @@ namespace SolarRangers
             }
         }
 
+        public static OWAudioSource Create2DAudioSource(OWAudioMixer.TrackName track, AudioType audioType)
+        {
+            var audioSource = Create2DAudioSource(track);
+            audioSource.AssignAudioLibraryClip(audioType);
+            return audioSource;
+        }
+
         public static OWAudioSource Create2DAudioSource(OWAudioMixer.TrackName track, AudioClip clip)
+        {
+            var audioSource = Create2DAudioSource(track);
+            audioSource._audioLibraryClip = AudioType.None;
+            audioSource.clip = clip;
+            return audioSource;
+        }
+
+        static OWAudioSource Create2DAudioSource(OWAudioMixer.TrackName track)
         {
             var audioObj = new GameObject("AudioSource");
             audioObj.SetActive(false);
-            audioObj.AddComponent<AudioSource>();
+            var audioSrc = audioObj.AddComponent<AudioSource>();
+            audioSrc.playOnAwake = false;
             var audioSource = audioObj.AddComponent<OWAudioSource>();
             audioSource.SetTrack(track);
             audioObj.SetActive(true);
-            audioSource._audioLibraryClip = AudioType.None;
             audioSource.spatialBlend = 0f;
-            audioSource.clip = clip;
             return audioSource;
         }
     }

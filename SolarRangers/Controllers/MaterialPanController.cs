@@ -12,11 +12,20 @@ namespace SolarRangers.Controllers
         Material materialRef;
         public int materialIndex;
         public Vector2 scrollSpeed;
-        void Awake() {
-            materialRef = GetComponent<MeshRenderer>().sharedMaterials[materialIndex];
+        void Awake()
+        {
+            try
+            {
+                materialRef = GetComponent<MeshRenderer>().sharedMaterials[materialIndex];
+            }
+            catch (Exception e)
+            {
+                SolarRangers.Log(e.ToString(), OWML.Common.MessageType.Error);
+            }
         }
         public void Update()
         {
+            if (!materialRef) return;
             materialRef.mainTextureOffset += scrollSpeed * Time.deltaTime;
         }
     }

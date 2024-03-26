@@ -333,6 +333,7 @@ namespace SolarRangers.Managers
             Locator.GetShipLogManager().RevealFact("RANGER_EGGSTAR_VICTORY");
 
             state = State.Epilogue;
+            StartCoroutine(DoEpilogue());
 
             IEnumerator CutsceneBody()
             {
@@ -354,12 +355,16 @@ namespace SolarRangers.Managers
             if (PlayerState.AtFlightConsole())
             {
                 FindObjectOfType<ShipCockpitController>().ExitFlightConsole();
+                FindObjectOfType<ShipCockpitController>().CompleteExitFlightConsole();
                 yield return null;
             }
+
+            FindObjectOfType<HatchController>().OnExit(Locator.GetPlayerDetector());
             
             var pos = eggStar.transform.TransformPoint(-1f, 2060f, -51f);
             var rot = eggStar.transform.rotation * Quaternion.Euler(270f, 90f, 90f);
             Locator.GetPlayerBody().WarpToPositionRotation(pos, rot);
+            Locator.GetPlayerBody().SetVelocity(eggStar.GetAttachedOWRigidbody().GetPointVelocity(pos));
             yield return null;
             
             Locator.GetPlayerBody().GetComponent<PlayerResources>().ToggleInvincibility();
@@ -369,18 +374,21 @@ namespace SolarRangers.Managers
 
             var medalParent = Locator.GetPlayerTransform().Find("Traveller_HEA_Player_v2/Traveller_Rig_v01:Traveller_Trajectory_Jnt/Traveller_Rig_v01:Traveller_ROOT_Jnt/Traveller_Rig_v01:Traveller_Spine_01_Jnt/Traveller_Rig_v01:Traveller_Spine_02_Jnt/Torso");
             var medal = ObjectUtils.SpawnPrefab("Medal", medalParent);
-            medal.localPosition = new Vector3();
-            medal.localEulerAngles = new Vector3();
+            medal.localPosition = new Vector3(-1.75f, -0.32f, -0.4f);
+            medal.localEulerAngles = new Vector3(347f, 270f, 0f);
+            medal.localScale = Vector3.one * 50f;
 
             var targetPos = new Vector3(-1f, 2070f, -51f);
             var targetRot = Quaternion.Euler(90f, 0f, 0f);
             cutsceneCam.transform.position = Locator.GetPlayerCamera().transform.position + eggStar.transform.forward;
             cutsceneCam.transform.rotation = Quaternion.LookRotation(-eggStar.transform.up, eggStar.transform.forward);
-            yield return DoCutscene(CutsceneBody, eggStar.transform, targetPos, targetRot, 15f, false);
+            yield return DoCutscene(CutsceneBody, eggStar.transform, targetPos, targetRot, 20f, false);
 
             IEnumerator CutsceneBody()
             {
                 yield return new WaitForSeconds(1f);
+                var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Victory");
+                creditsVolume.position = Locator.GetPlayerTransform().position;
             }
         }
 

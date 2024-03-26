@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2101277777
+CRC: 1348780602
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2ec72733a2071b343b1edd66fb5fa0e0
+    Hash: 098b1e12002de1e103ad5d7fcc7e41b7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 35af001d1f265cc9132c907309a661be
@@ -72,6 +72,7 @@ Assets:
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Angler_EyeLens.fbx
 - Assets/SolarRangers/Objects/EggEmpire/Meshes/Airlock_CapEmpty.fbx
 - Assets/SolarRangers/Materials/Effects_EGG_VolumetricLight.mat
+- Assets/SolarRangers/Materials/SR_Patch_Local.mat
 - Assets/SolarRangers/Materials/Effects_EGG_Forcefield_mat.mat
 - Assets/SolarRangers/Objects/Rangers/Presentation/Presentation.mat
 - Assets/SolarRangers/Materials/Evil_EGG_n.png

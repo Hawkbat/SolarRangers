@@ -16,8 +16,10 @@ namespace SolarRangers.Managers
         AudioClip victoryMusicClip;
 
         OWAudioSource audioSource;
+        OWAudioSource fanfareAudioSource;
         VillageMusicVolume villageMusic;
         int combatMusicClipIndex;
+        bool fanfarePlaying = false;
 
         void Awake()
         {
@@ -35,13 +37,8 @@ namespace SolarRangers.Managers
             if (!victoryMusicClip)
                 victoryMusicClip = SolarRangers.Instance.ModHelper.Assets.GetAudio("assets/music/Steven McDonald - Ascend.mp3");
 
-            var audioObj = new GameObject("AudioSource");
-            audioObj.transform.SetParent(transform, false);
-            audioObj.SetActive(false);
-            audioObj.AddComponent<AudioSource>();
-            audioSource = audioObj.AddComponent<OWAudioSource>();
-            audioSource.SetTrack(OWAudioMixer.TrackName.Music);
-            audioObj.SetActive(true);
+            audioSource = ObjectUtils.Create2DAudioSource(OWAudioMixer.TrackName.Music, combatMusicClips[0]);
+            fanfareAudioSource = ObjectUtils.Create2DAudioSource(OWAudioMixer.TrackName.Music, AudioType.EYE_EndOfGame);
         }
 
         // Music:
@@ -98,21 +95,21 @@ namespace SolarRangers.Managers
                         TransitionTo(escapeMusicClip);
                         break;
                     case JamScenarioManager.State.Ending:
-                        if (audioSource.audioLibraryClip != AudioType.EYE_EndOfGame && !audioSource.IsFadingOut())
-                        {
-                            audioSource.FadeOut(0.5f);
-                        }
-                        if (audioSource.audioLibraryClip != AudioType.EYE_EndOfGame && !audioSource.isPlaying)
-                        {
-                            audioSource.AssignAudioLibraryClip(AudioType.EYE_EndOfGame);
-                            audioSource.FadeIn(0f);
-                            audioSource.Stop();
-                            audioSource.PlayDelayed(2f);
-                        }
-                        break;
                     case JamScenarioManager.State.Epilogue:
+                        if (SolarRangers.PersistentAudioSource != audioSource && Locator.GetDeathManager()._isDead)
+                        {
+                            audioSource.SetTrack(OWAudioMixer.TrackName.Death);
+                            audioSource._audioSource.outputAudioMixerGroup = Locator.GetAudioMixer().GetAudioMixerGroup(OWAudioMixer.TrackName.Death);
+                            DontDestroyOnLoad(audioSource);
+                            SolarRangers.PersistentAudioSource = audioSource;
+                        }
                         TransitionTo(victoryMusicClip);
                         break;
+                }
+                if (JamScenarioManager.GetState() == JamScenarioManager.State.Ending && !fanfarePlaying)
+                {
+                    fanfarePlaying = true;
+                    fanfareAudioSource.PlayDelayed(2f);
                 }
             }
         }

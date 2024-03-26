@@ -4,7 +4,7 @@
   "author": "Hawkbar",
   "name": "SolarRangers",
   "uniqueName": "Hawkbar.SolarRangers",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "owmlVersion": "2.9.8",
   "dependencies": [ "xen.ModJam3", "xen.NewHorizons", "xen.CommonCameraUtility" ]
 }

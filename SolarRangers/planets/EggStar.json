@@ -476,7 +476,7 @@
       },
       {
         "rename": "PREFAB_Medal",
-        "path": "Assets/SolarRangers/Objects/Rangers/Medal.prefab",
+        "path": "Assets/SolarRangers/Objects/Rangers/Medal/Medal.prefab",
         "assetBundle": "assetbundles/solarrangers",
         "keepLoaded": true
       }
@@ -586,7 +586,7 @@
           "z": 0
         },
         "radius": 100,
-        "creditsType": "kazoo",
+        "creditsType": "fast",
         "deathType": "meditation",
         "gameOverText": "GameOverVictory",
         "rename": "VOLUME_Victory"
