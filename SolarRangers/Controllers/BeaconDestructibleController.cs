@@ -42,7 +42,7 @@ namespace SolarRangers.Controllers
                     probe.ExternalRetrieve(true);
                 }
                 beaconObj.SetActive(false);
-                ExplosionManager.MediumExplosion(SolarRangers.WorldCombatant, 50f, transform, transform.position);
+                ExplosionManager.LargeExplosion(SolarRangers.WorldCombatant, 10f, transform, transform.position);
             }
             return true;
         }
