@@ -8,7 +8,7 @@ You may need to adjust your sound settings and controller bindings to play this 
 
 See if you can find the secret Ernesto ending!
 
-This mod is a jam entry for the [March 2024 Mod Jam](https://outerwildsmods.com/jam/mar-2024/).
+Third-place winning submission for the 10-day [March 2024 Mod Jam](https://outerwildsmods.com/jam/mar-2024/).
 
 
 ### Credits
