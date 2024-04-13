@@ -95,7 +95,14 @@ namespace SolarRangers.Managers
                         TransitionTo(escapeMusicClip);
                         break;
                     case JamScenarioManager.State.Ending:
+                        if (!fanfarePlaying)
+                        {
+                            fanfarePlaying = true;
+                            fanfareAudioSource.PlayDelayed(2f);
+                        }
+                        break;
                     case JamScenarioManager.State.Epilogue:
+                    case JamScenarioManager.State.Outro:
                         if (SolarRangers.PersistentAudioSource != audioSource && Locator.GetDeathManager()._isDead)
                         {
                             audioSource.SetTrack(OWAudioMixer.TrackName.Death);
@@ -105,11 +112,6 @@ namespace SolarRangers.Managers
                         }
                         TransitionTo(victoryMusicClip);
                         break;
-                }
-                if (JamScenarioManager.GetState() == JamScenarioManager.State.Ending && !fanfarePlaying)
-                {
-                    fanfarePlaying = true;
-                    fanfareAudioSource.PlayDelayed(2f);
                 }
             }
         }

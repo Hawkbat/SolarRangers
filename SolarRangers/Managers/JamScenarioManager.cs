@@ -138,16 +138,22 @@ namespace SolarRangers.Managers
                     }
                     break;
                 case State.Ending:
-
+                    if (DialogueConditionManager.SharedInstance.GetConditionState("RANGER_VICTORY"))
+                    {
+                        state = State.Epilogue;
+                        StartCoroutine(DoEpilogue());
+                    }
                     break;
                 case State.Epilogue:
+                    if (DialogueConditionManager.SharedInstance.GetConditionState("RANGER_VICTORY_ENDING"))
+                    {
+                        state = State.Outro;
+                        StartCoroutine(DoOutro());
+                    }
+                    break;
+                case State.Outro:
 
                     break;
-            }
-            if (state == State.Epilogue && DialogueConditionManager.SharedInstance.GetConditionState("RANGER_VICTORY_ENDING"))
-            {
-                var creditsVolume = eggStar.transform.Find("Sector/VOLUME_Victory");
-                creditsVolume.position = Locator.GetPlayerTransform().position;
             }
             if (state != State.Epilogue && DialogueConditionManager.SharedInstance.GetConditionState("RANGER_ERNESTO_ENDING"))
             {
@@ -332,12 +338,15 @@ namespace SolarRangers.Managers
             DialogueConditionManager.SharedInstance.SetConditionState("RANGER_VICTORY", true);
             Locator.GetShipLogManager().RevealFact("RANGER_EGGSTAR_VICTORY");
 
-            state = State.Epilogue;
-            StartCoroutine(DoEpilogue());
-
             IEnumerator CutsceneBody()
             {
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1f);
+                for (var i = 0; i < 5f; i++)
+                {
+                    var offset = UnityEngine.Random.onUnitSphere * 100f;
+                    ExplosionManager.MassiveExplosion(reactor, 200f, eggStar.transform, eggStar.transform.position + offset);
+                    yield return new WaitForSeconds(0.2f);
+                }
                 ExplosionManager.MassiveExplosion(reactor, 200f, eggStar.transform, eggStar.transform.position);
                 yield return new WaitForSeconds(2.2f);
                 eggStar.transform.Find("Sector/Prefab_NOM_Airlock (1)").gameObject.SetActive(false);
@@ -348,6 +357,20 @@ namespace SolarRangers.Managers
         }
 
         IEnumerator DoEpilogue()
+        {
+            var notificationText = SolarRangers.NewHorizons.GetTranslationForUI("NotificationEpilogue");
+            var notification = new NotificationData(NotificationTarget.All, notificationText);
+            NotificationManager.SharedInstance.PostNotification(notification, true);
+
+            while (state == State.Epilogue)
+            {
+                yield return null;
+            }
+
+            NotificationManager.SharedInstance.UnpinNotification(notification);
+        }
+
+        IEnumerator DoOutro()
         {
             var applauseSource = ObjectUtils.Create2DAudioSource(OWAudioMixer.TrackName.Music, applauseClip);
             
@@ -447,6 +470,7 @@ namespace SolarRangers.Managers
             Escape,
             Ending,
             Epilogue,
+            Outro,
         }
     }
 }
