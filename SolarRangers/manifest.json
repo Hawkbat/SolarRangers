@@ -2,9 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/ow-mods/owml/master/schemas/manifest_schema.json",
   "filename": "SolarRangers.dll",
   "author": "Hawkbar",
-  "name": "SolarRangers",
+  "name": "Solar Rangers",
   "uniqueName": "Hawkbar.SolarRangers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "owmlVersion": "2.9.8",
   "dependencies": [ "xen.ModJam3", "xen.NewHorizons", "xen.CommonCameraUtility" ]
 }
