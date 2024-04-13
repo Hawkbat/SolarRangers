@@ -10,7 +10,12 @@
   },
   "Orbit": {
     "primaryBody": "Jam 3 Sun",
-    "isTidallyLocked": true
+    "isTidallyLocked": true,
+    "alignmentAxis": {
+      "x": 1,
+      "y": 0,
+      "z": 0
+    }
   },
   "Bramble": {
     "nodes": [
@@ -607,6 +612,9 @@
   },
   "ShipLog": {
     "xmlFile": "planets/shiplogs/EGG_STAR.xml",
-    "spriteFolder": "planets/shiplogs/sprites/"
+    "spriteFolder": "planets/shiplogs/sprites/",
+    "mapMode": {
+      "revealedSprite": "planets/EggStar.png"
+    }
   }
 }

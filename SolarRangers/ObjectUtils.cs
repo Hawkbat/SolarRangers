@@ -189,7 +189,25 @@ namespace SolarRangers
                             {
                                 throw new KeyNotFoundException($"Could not retrieve material from bundle: {path}");
                             }
+
                             newMat = bundle.LoadAsset<Material>(path);
+
+                            var replacementShader = Shader.Find(newMat.shader.name);
+                            if (replacementShader != null)
+                            {
+                                if (newMat.renderQueue != newMat.shader.renderQueue)
+                                {
+                                    var renderType = newMat.GetTag("RenderType", false);
+                                    var renderQueue = newMat.renderQueue;
+                                    newMat.shader = replacementShader;
+                                    newMat.SetOverrideTag("RenderType", renderType);
+                                    newMat.renderQueue = renderQueue;
+                                }
+                                else
+                                {
+                                    newMat.shader = replacementShader;
+                                }
+                            }
 
                             bundleMats[newMatName] = newMat;
                         }

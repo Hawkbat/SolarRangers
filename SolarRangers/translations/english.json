@@ -7,6 +7,7 @@
     "NotificationInterior": "Objective: Reach Reactor Core",
     "NotificationReactor": "Objective: Destroy Reactor Core",
     "NotificationEvacuate": "Reactor Critical! Evacuate Immediately!",
+    "NotificationEpilogue": "Objective: Return to Base",
     "PromptShipFireLasers": "Fire Lasers",
     "PromptSuitFireLaser": "Fire Laser",
     "NotificationProbeReload": "Reloading Launcher...",
