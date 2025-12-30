@@ -16,6 +16,10 @@ Third-place winning submission for the 10-day [March 2024 Mod Jam](https://outer
 - Hawkbar: Programming, Design, Writing
 - Insmoshable: Environment and Character Art
 
+Translations By:
+
+- Russian: KOTvZephire
+
 Special thanks to our playtesters: Oshyu18, ShwinVT, TeamKabuki
 
 Music by Steven McDonald, used under a royalty-free license
