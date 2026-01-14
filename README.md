@@ -19,6 +19,7 @@ Third-place winning submission for the 10-day [March 2024 Mod Jam](https://outer
 Translations By:
 
 - Russian: KOTvZephire
+- Chinese (Simplified): SanBaiMing 
 
 Special thanks to our playtesters: Oshyu18, ShwinVT, TeamKabuki
 
